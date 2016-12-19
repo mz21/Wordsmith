@@ -1,0 +1,84 @@
+exports[`<NavBar /> renders correctly 1`] = `
+<View>
+  <View>
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": 40,
+          "width": 40,
+        }
+      } />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail">
+      Todo
+    </Text>
+  </View>
+  <View>
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": 40,
+          "width": 40,
+        }
+      } />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail">
+      Add
+    </Text>
+  </View>
+  <View>
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": 40,
+          "width": 40,
+        }
+      } />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail">
+      Words
+    </Text>
+  </View>
+  <View>
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": 40,
+          "width": 40,
+        }
+      } />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail">
+      Calendar
+    </Text>
+  </View>
+  <View>
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": 40,
+          "width": 40,
+        }
+      } />
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail">
+      Profile
+    </Text>
+  </View>
+</View>
+`;
