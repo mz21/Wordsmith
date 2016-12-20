@@ -3,6 +3,7 @@ var StyleSheet = require('StyleSheet');
 var View = require('View');
 var Text = require('Text')
 var Image = require('Image');
+import ProgressCircle from 'react-native-progress/Circle';
 
 class TodoPage extends React.Component {
   props: {
@@ -28,6 +29,7 @@ class TodoPage extends React.Component {
         <Text>
           Todo Page
         </Text>
+        <ProgressCircle size={60} showsText formatText={function() {return '6/152';}} progress={0.8} indeterminate={false} />
       </View>
     );
   }
