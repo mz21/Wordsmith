@@ -27,8 +27,8 @@ export default class Wordsmith extends Component {
   render() {
     return (
       <TabBarIOS
-        tintColor="white"
-        barTintColor="darkslateblue">
+        tintColor="darkslateblue"
+        barTintColor="rgb(249,249,249)">
         <Icon.TabBarItem
           title="Todo"
           iconName="check-box"
@@ -38,8 +38,7 @@ export default class Wordsmith extends Component {
            this.setState({
              selectedTab: 'todo',
            });
-         }}
-          >
+         }}>
           <TodoPage />
         </Icon.TabBarItem>
         <Icon.TabBarItem
@@ -102,7 +101,7 @@ export default class Wordsmith extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: 'gray',
   },

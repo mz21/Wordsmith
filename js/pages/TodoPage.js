@@ -9,7 +9,22 @@ class TodoPage extends React.Component {
   };
   render() {
     return (
-      <View>
+      <View style={    {flex: 1,
+          justifyContent: 'flex-start',
+          alignItems: 'center'}}>
+        <View style={styles.headerBar}>
+            <Text style={
+              {
+                height: 28,
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: 14,
+                fontWeight: '600'
+              }
+            }>
+              Todos for Today
+            </Text>
+        </View>
         <Text>
           Todo Page
         </Text>
@@ -19,7 +34,15 @@ class TodoPage extends React.Component {
 }
 
 var styles = StyleSheet.create({
-  container: {
+  headerBar: {
+    flexDirection: 'row',
+    height: 60,
+    width: 500,
+    backgroundColor: 'rgb(249,249,249)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(210,210,210, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   }
 });
 
