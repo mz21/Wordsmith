@@ -13,7 +13,7 @@ import {
   TabBarIOS
 } from 'react-native';
 import NavBar from './js/NavBar'
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class Wordsmith extends Component {
   state = {
@@ -25,24 +25,23 @@ export default class Wordsmith extends Component {
       <TabBarIOS
         tintColor="white"
         barTintColor="darkslateblue">
-        <TabBarIOS.Item title="Todo"
-          systemIcon="bookmarks"
+        <Icon.TabBarItem
+          title="Todo"
+          iconName="check-box"
+          selectedIconName="check-box"
           selected={this.state.selectedTab === 'todo'}
           onPress={() => {
            this.setState({
              selectedTab: 'todo',
            });
-          }}>
-          <View>
-            <Text>
-              Todo
-            </Text>
-          </View>
-        </TabBarIOS.Item>
+         }}
+          >
+          <View><Text>Home Tab</Text></View>
+        </Icon.TabBarItem>
         <Icon.TabBarItem
-          title="Home"
-          iconName="ios-home-outline"
-          selectedIconName="ios-home"
+          title="Add"
+          iconName="add-circle-outline"
+          selectedIconName="add-circle-outline"
           selected={this.state.selectedTab === 'home'}
           onPress={() => {
            this.setState({
@@ -52,62 +51,45 @@ export default class Wordsmith extends Component {
           >
           <View><Text>Home Tab</Text></View>
         </Icon.TabBarItem>
-        <TabBarIOS.Item title="Add"
-          systemIcon="most-viewed"
-          selected={this.state.selectedTab === 'add'}
-          onPress={() => {
-           this.setState({
-             selectedTab: 'add',
-           });
-          }}>
-          <View>
-            <Text>
-              Add
-            </Text>
-          </View>
-        </TabBarIOS.Item>
-        <TabBarIOS.Item title="Words"
-          systemIcon="favorites"
+        <Icon.TabBarItem
+          title="Words"
+          iconName="view-list"
+          selectedIconName="view-list"
           selected={this.state.selectedTab === 'words'}
           onPress={() => {
            this.setState({
              selectedTab: 'words',
            });
-          }}>
-          <View>
-            <Text>
-              Words
-            </Text>
-          </View>
-        </TabBarIOS.Item>
-        <TabBarIOS.Item title="Calendar"
-          systemIcon="top-rated"
+         }}
+          >
+          <View><Text>Home Tab</Text></View>
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+          title="Calendar"
+          iconName="schedule"
+          selectedIconName="schedule"
           selected={this.state.selectedTab === 'calendar'}
           onPress={() => {
            this.setState({
              selectedTab: 'calendar',
            });
-          }}>
-          <View>
-            <Text>
-              Calendar
-            </Text>
-          </View>
-        </TabBarIOS.Item>
-        <TabBarIOS.Item title="Profile"
-          systemIcon="contacts"
+         }}
+          >
+          <View><Text>Home Tab</Text></View>
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+          title="Profile"
+          iconName="person"
+          selectedIconName="person"
           selected={this.state.selectedTab === 'profile'}
           onPress={() => {
            this.setState({
              selectedTab: 'profile',
            });
-          }}>
-          <View>
-            <Text>
-              Profile
-            </Text>
-          </View>
-        </TabBarIOS.Item>
+         }}
+          >
+          <View><Text>Profile</Text></View>
+        </Icon.TabBarItem>
       </TabBarIOS>
     );
   }
