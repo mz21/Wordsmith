@@ -12,8 +12,12 @@ import {
   View,
   TabBarIOS
 } from 'react-native';
-import NavBar from './js/NavBar'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import TodoPage from './js/pages/TodoPage'
+import AddPage from './js/pages/AddPage'
+import WordsPage from './js/pages/WordsPage'
+import CalendarPage from './js/pages/CalendarPage'
+import ProfilePage from './js/pages/ProfilePage'
 
 export default class Wordsmith extends Component {
   state = {
@@ -36,7 +40,7 @@ export default class Wordsmith extends Component {
            });
          }}
           >
-          <View><Text>Home Tab</Text></View>
+          <TodoPage />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Add"
@@ -49,7 +53,7 @@ export default class Wordsmith extends Component {
            });
          }}
           >
-          <View><Text>Home Tab</Text></View>
+          <AddPage />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Words"
@@ -62,7 +66,7 @@ export default class Wordsmith extends Component {
            });
          }}
           >
-          <View><Text>Home Tab</Text></View>
+          <WordsPage />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Calendar"
@@ -75,7 +79,7 @@ export default class Wordsmith extends Component {
            });
          }}
           >
-          <View><Text>Home Tab</Text></View>
+          <CalendarPage />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Profile"
@@ -88,7 +92,7 @@ export default class Wordsmith extends Component {
            });
          }}
           >
-          <View><Text>Profile</Text></View>
+          <ProfilePage />
         </Icon.TabBarItem>
       </TabBarIOS>
     );
