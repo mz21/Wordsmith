@@ -13,6 +13,7 @@ import {
   TabBarIOS
 } from 'react-native';
 import NavBar from './js/NavBar'
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class Wordsmith extends Component {
   state = {
@@ -38,6 +39,19 @@ export default class Wordsmith extends Component {
             </Text>
           </View>
         </TabBarIOS.Item>
+        <Icon.TabBarItem
+          title="Home"
+          iconName="ios-home-outline"
+          selectedIconName="ios-home"
+          selected={this.state.selectedTab === 'home'}
+          onPress={() => {
+           this.setState({
+             selectedTab: 'home',
+           });
+         }}
+          >
+          <View><Text>Home Tab</Text></View>
+        </Icon.TabBarItem>
         <TabBarIOS.Item title="Add"
           systemIcon="most-viewed"
           selected={this.state.selectedTab === 'add'}
