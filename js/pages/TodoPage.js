@@ -6,6 +6,7 @@ var Image = require('Image');
 var Dimensions = require('Dimensions');
 import ProgressCircle from 'react-native-progress/Circle';
 import Button from '../Button'
+import WordEntry from '../WordEntry'
 
 var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
@@ -32,6 +33,8 @@ class TodoPage extends React.Component {
           <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.8} color={'rgb(197,111,255)'} indeterminate={false} />
           <Button width={110} height={35} text="Start"/>
         </View>
+      </View>
+      <View style={styles.wordEntries}>
       </View>
     );
   }
@@ -62,6 +65,9 @@ var styles = StyleSheet.create({
     justifyContent: 'space-around',
     borderBottomColor: 'rgb(220,220,220)',
     borderBottomWidth: 1
+  },
+  wordEntries: {
+
   }
 });
 
