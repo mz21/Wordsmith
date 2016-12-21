@@ -25,8 +25,11 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgb(250,250,251)',
     borderColor: 'rgb(216,216,216)',
     borderRadius: 5,
+    borderWidth: 1,
     height: 25,
-    width: 0.8 * width
+    width: 0.72 * width,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
