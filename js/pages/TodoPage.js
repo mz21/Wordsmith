@@ -1,6 +1,7 @@
 var React = require('React');
 var StyleSheet = require('StyleSheet');
 var View = require('View');
+var ScrollView = require('ScrollView');
 var Text = require('Text')
 var Image = require('Image');
 var Dimensions = require('Dimensions');
@@ -23,7 +24,7 @@ class TodoPage extends React.Component {
                 alignItems: 'center',
                 fontSize: 14,
                 fontWeight: '600',
-                fontFamily: 'Helvetica'
+                fontFamily: 'Avenir Next'
               }
             }>
               Todos for Today
@@ -33,8 +34,20 @@ class TodoPage extends React.Component {
           <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.8} color={'rgb(197,111,255)'} indeterminate={false} />
           <Button width={110} height={35} text="Start"/>
         </View>
-        <View style={styles.wordEntries}>
-        </View>
+        <ScrollView contentContainerStyle={styles.wordEntries}>
+          <WordEntry word="homen" />
+          <WordEntry word="mulheres" />
+          <WordEntry word="obrigado" />
+          <WordEntry word="fogo" />
+          <WordEntry word="vermelho" />
+          <WordEntry word="tudo bom" />
+          <WordEntry word="homen" />
+          <WordEntry word="mulheres" />
+          <WordEntry word="obrigado" />
+          <WordEntry word="fogo" />
+          <WordEntry word="vermelho" />
+          <WordEntry word="tudo bom" />
+        </ScrollView>
       </View>
     );
   }
@@ -67,7 +80,9 @@ var styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   wordEntries: {
-
+    alignItems: 'center',
+    width: width,
+    paddingBottom: 25
   }
 });
 
