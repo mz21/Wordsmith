@@ -9,25 +9,27 @@ import CustomTextInput from '../CustomTextInput';
 import Button from '../Button';
 var Dimensions = require('Dimensions');
 
-var {width} = Dimensions.get('window');
+var {width, height} = Dimensions.get('window');
 class AddPage extends React.Component {
   props: {
   };
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.wrapper}>
         <HeaderBar title="Add a Word" width={width}/>
-        <SearchBar text="Find Image via Google"/>
-        <View style={styles.image}>
-          <Text style={styles.imageText}>
-            Images help you remember things
-          </Text>
-        </View>
-        <CustomTextInput value='Enter the word (e.g. Bonjour)' width={width*0.7} height={35}/>
-        <CustomTextInput value='Enter the translation (e.g. Hello)' width={width*0.7} height={35}/>
-        <View style={styles.buttonSection}>
-          <Button text="Add this Word" width={110} height={35}/>
-          <Button text="Start Over" width={110} height={35} />
+        <View style={styles.container}>
+          <SearchBar text="Find Image via Google"/>
+          <View style={styles.image}>
+            <Text style={styles.imageText}>
+              Images help you remember things
+            </Text>
+          </View>
+          <CustomTextInput value='Enter the word (e.g. Bonjour)' width={width*0.7} height={35}/>
+          <CustomTextInput value='Enter the translation (e.g. Hello)' width={width*0.7} height={35}/>
+          <View style={styles.buttonSection}>
+            <Button text="Add this Word" width={110} height={35}/>
+            <Button text="Start Over" width={110} height={35} />
+          </View>
         </View>
       </View>
     );
@@ -35,13 +37,18 @@ class AddPage extends React.Component {
 }
 
 var styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
     alignItems: 'center',
   },
+  container: {
+    height: height * 0.78,
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
   image: {
-    width: width * 0.7,
-    height: width * 0.7,
+    width: width * 0.63,
+    height: width * 0.63,
     backgroundColor: 'rgb(251,251,251)',
     borderColor: 'rgb(208,208,208)',
     borderWidth: 1,
