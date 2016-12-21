@@ -4,11 +4,16 @@ var View = require('View');
 var Text = require('Text')
 
 class Button extends React.Component {
+  props: {
+    height: React.PropTypes.number,
+    width: React.PropTypes.number,
+    text: React.PropTypes.string
+  };
   render() {
     return (
-      <View style={styles.button}>
+      <View style={[styles.button, {width: this.props.width, height: this.props.height}]}>
         <Text style={styles.buttonText}>
-          Start
+          {this.props.text}
         </Text>
       </View>
     );
@@ -18,10 +23,10 @@ class Button extends React.Component {
 
 var styles = StyleSheet.create({
   button: {
-    borderColor: 'rgb(192,192,192)',
+    borderColor: 'rgb(203,203,203)',
     borderWidth: 1,
     borderRadius: 3,
-    width: 110,
+    width: 100,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center'

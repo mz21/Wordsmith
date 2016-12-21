@@ -30,7 +30,7 @@ class TodoPage extends React.Component {
         </View>
         <View style={styles.progressSection}>
           <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.8} color={'rgb(197,111,255)'} indeterminate={false} />
-          <Button />
+          <Button width={110} height={35} text="Start"/>
         </View>
       </View>
     );
