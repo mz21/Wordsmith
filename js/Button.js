@@ -26,8 +26,8 @@ var styles = StyleSheet.create({
     borderColor: 'rgb(203,203,203)',
     borderWidth: 1,
     borderRadius: 3,
-    width: 100,
-    height: 30,
+    width: 110,
+    height: 35,
     justifyContent: 'center',
     alignItems: 'center'
   },

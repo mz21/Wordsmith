@@ -12,7 +12,7 @@ class SearchBar extends React.Component {
   render() {
     return (
       <View style={styles.searchBar}>
-        <Text>
+        <Text style={styles.searchBarText}>
           {this.props.text}
         </Text>
       </View>
@@ -30,6 +30,12 @@ var styles = StyleSheet.create({
     width: 0.72 * width,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  searchBarText: {
+    fontFamily: 'Avenir Next',
+    fontWeight: '400',
+    fontSize: 11,
+    color: 'rgb(92,92,92)'
   }
 });
 

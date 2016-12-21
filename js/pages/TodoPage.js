@@ -6,8 +6,9 @@ var Text = require('Text')
 var Image = require('Image');
 var Dimensions = require('Dimensions');
 import ProgressCircle from 'react-native-progress/Circle';
-import Button from '../Button'
-import WordEntry from '../WordEntry'
+import Button from '../Button';
+import WordEntry from '../WordEntry';
+import HeaderBar from '../HeaderBar';
 
 var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
@@ -16,20 +17,7 @@ class TodoPage extends React.Component {
   render() {
     return (
       <View style={styles.todoLayout}>
-        <View style={styles.headerBar}>
-            <Text style={
-              {
-                height: 28,
-                justifyContent: 'center',
-                alignItems: 'center',
-                fontSize: 14,
-                fontWeight: '600',
-                fontFamily: 'Avenir Next'
-              }
-            }>
-              Todos for Today
-            </Text>
-        </View>
+        <HeaderBar title="Todos for Today" width={width}/>
         <View style={styles.progressSection}>
           <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.8} color={'rgb(197,111,255)'} indeterminate={false} />
           <Button width={110} height={35} text="Start"/>
@@ -59,16 +47,6 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: width
-  },
-  headerBar: {
-    flexDirection: 'row',
-    height: 60,
-    width: width,
-    backgroundColor: 'rgb(249,249,249)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(210,210,210, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
   },
   progressSection: {
     flexDirection: 'row',

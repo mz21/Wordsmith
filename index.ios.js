@@ -21,7 +21,7 @@ import ProfilePage from './js/pages/ProfilePage'
 
 export default class Wordsmith extends Component {
   state = {
-    selectedTab: 'todo',
+    selectedTab: 'add',
   };
 
   render() {
@@ -46,10 +46,10 @@ export default class Wordsmith extends Component {
             title="Add"
             iconName="add-circle-outline"
             selectedIconName="add-circle-outline"
-            selected={this.state.selectedTab === 'home'}
+            selected={this.state.selectedTab === 'add'}
             onPress={() => {
              this.setState({
-               selectedTab: 'home',
+               selectedTab: 'add',
              });
            }}
             >
