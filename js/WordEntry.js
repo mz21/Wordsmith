@@ -1,7 +1,7 @@
 var React = require('React');
 var StyleSheet = require('StyleSheet');
 var View = require('View');
-var Text = require('Text')
+var Text = require('Text');
 var Image = require('Image');
 var Dimensions = require('Dimensions');
 
