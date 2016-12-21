@@ -29,7 +29,7 @@ class TodoPage extends React.Component {
         <Text>
           Todo Page
         </Text>
-        <ProgressCircle size={60} showsText formatText={function() {return '6/152';}} progress={0.8} indeterminate={false} />
+        <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.8} color={'rgb(197,111,255)'} indeterminate={false} />
       </View>
     );
   }
