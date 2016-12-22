@@ -1,7 +1,5 @@
 var React = require('React');
-var StyleSheet = require('StyleSheet');
-var View = require('View');
-var Text = require('Text')
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 class Button extends React.Component {
   props: {
@@ -11,13 +9,11 @@ class Button extends React.Component {
   };
   render() {
     return (
-      <View style={[styles.button, {width: this.props.width, height: this.props.height}]} onPress={() => {
-       alert(this.props.text);
-     }}>
+      <TouchableOpacity style={[styles.button, {width: this.props.width, height: this.props.height}]}>
         <Text style={styles.buttonText}>
           {this.props.text}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
