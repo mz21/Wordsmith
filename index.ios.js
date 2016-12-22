@@ -17,7 +17,6 @@ export default class Wordsmith extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <WordsmithNavigator />
         <NavTabBars />
       </View>
     );

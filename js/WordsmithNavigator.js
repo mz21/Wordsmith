@@ -1,19 +1,21 @@
 var React = require('React');
 import {StyleSheet, Navigator} from 'react-native';
+import TodoPage from './pages/TodoPage';
 
 export default class WordsmithNavigator extends React.Component {
   render() {
     return (
       <Navigator
-        initialRoute={{}}
+        initialRoute={{ name: 'Main' }}
+        style={styles.container}
         renderScene={this.renderScene}>
       </Navigator>
     )
   }
   renderScene(route, navigator) {
-    // if (route.rate) {
-    //   return <RatingScreen navigator={navigator} surveys={route.surveys} />;
-    // }
+    if (route.name == 'Main') {
+      return <TodoPage />;
+    }
     // if (route.notices) {
     //   return <ThirdPartyNotices navigator={navigator} />;
     // }
@@ -21,4 +23,7 @@ export default class WordsmithNavigator extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
 });
