@@ -19,7 +19,7 @@ class TodoPage extends React.Component {
       <View style={styles.todoLayout}>
         <HeaderBar title="Todos for Today" width={width}/>
         <View style={styles.progressSection}>
-          <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.8} color={'rgb(197,111,255)'} indeterminate={false} />
+          <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.2} color={'rgba(197,111,255, 1)'} thickness={5} unfilledColor={'rgba(197,111,255, 0.35)'} borderWidth={0} textStyle={styles.progressCircleText} indeterminate={false} />
           <Button width={110} height={35} text="Start"/>
         </View>
         <ScrollView contentContainerStyle={styles.wordEntries}>
@@ -56,6 +56,13 @@ var styles = StyleSheet.create({
     justifyContent: 'space-around',
     borderBottomColor: 'rgb(220,220,220)',
     borderBottomWidth: 1
+  },
+  progressCircleText: {
+    color: 'rgb(111,111,111)',
+    fontFamily: 'Avenir Next',
+    fontSize: 16,
+    fontWeight: '400',
+    letterSpacing: 1
   },
   wordEntries: {
     alignItems: 'center',
