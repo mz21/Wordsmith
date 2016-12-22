@@ -11,7 +11,9 @@ class Button extends React.Component {
   };
   render() {
     return (
-      <View style={[styles.button, {width: this.props.width, height: this.props.height}]}>
+      <View style={[styles.button, {width: this.props.width, height: this.props.height}]} onPress={() => {
+       alert(this.props.text);
+     }}>
         <Text style={styles.buttonText}>
           {this.props.text}
         </Text>
