@@ -8,20 +8,16 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
-  View
+  View,
 } from 'react-native';
-import NavTabBars from './js/NavTabBars'
-import TodoPage from './js/pages/TodoPage'
-import AddPage from './js/pages/AddPage'
-import WordsPage from './js/pages/WordsPage'
-import CalendarPage from './js/pages/CalendarPage'
-import ProfilePage from './js/pages/ProfilePage'
+import WordsmithNavigator from './js/WordsmithNavigator';
+import NavTabBars from './js/NavTabBars';
 
 export default class Wordsmith extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <WordsmithNavigator />
         <NavTabBars />
       </View>
     );
