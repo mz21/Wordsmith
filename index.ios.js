@@ -10,7 +10,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import WordsmithNavigator from './js/WordsmithNavigator';
 import NavTabBars from './js/NavTabBars';
 
 export default class Wordsmith extends Component {
