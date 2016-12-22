@@ -11,11 +11,14 @@ import {
   View,
 } from 'react-native';
 import NavTabBars from './js/NavTabBars';
+import HeaderBar from './js/HeaderBar';
+
 
 export default class Wordsmith extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <HeaderBar title="Todos for Today"/>
         <NavTabBars />
       </View>
     );

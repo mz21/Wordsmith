@@ -2,6 +2,7 @@ var React = require('React');
 import {TabBarIOS, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import TodoPage from './pages/TodoPage'
+import TodoQuizPage from './pages/TodoQuizPage'
 import AddPage from './pages/AddPage'
 import WordsPage from './pages/WordsPage'
 import CalendarPage from './pages/CalendarPage'
@@ -9,7 +10,7 @@ import ProfilePage from './pages/ProfilePage'
 
 class NavTabBars extends React.Component {
   state = {
-    selectedTab: 'add',
+    selectedTab: 'todo',
   };
   render() {
     return (
@@ -26,7 +27,7 @@ class NavTabBars extends React.Component {
              selectedTab: 'todo',
            });
          }}>
-          <TodoPage />
+          <TodoQuizPage />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Add"

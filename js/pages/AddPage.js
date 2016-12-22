@@ -3,7 +3,6 @@ var StyleSheet = require('StyleSheet');
 var View = require('View');
 var Text = require('Text')
 var Image = require('Image');
-import HeaderBar from '../HeaderBar';
 import SearchBar from '../SearchBar';
 import CustomTextInput from '../CustomTextInput';
 import Button from '../Button';
@@ -16,7 +15,6 @@ class AddPage extends React.Component {
   render() {
     return (
       <View style={styles.wrapper}>
-        <HeaderBar title="Add a Word" width={width}/>
         <View style={styles.container}>
           <SearchBar text="Find Image via Google"/>
           <View style={styles.image}>

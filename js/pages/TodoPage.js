@@ -8,7 +8,6 @@ var Dimensions = require('Dimensions');
 import ProgressCircle from 'react-native-progress/Circle';
 import Button from '../Button';
 import WordEntry from '../WordEntry';
-import HeaderBar from '../HeaderBar';
 
 var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
@@ -17,7 +16,6 @@ class TodoPage extends React.Component {
   render() {
     return (
       <View style={styles.todoLayout}>
-        <HeaderBar title="Todos for Today" width={width}/>
         <View style={styles.progressSection}>
           <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.2} color={'rgba(197,111,255, 1)'} thickness={5} unfilledColor={'rgba(197,111,255, 0.35)'} borderWidth={0} textStyle={styles.progressCircleText} indeterminate={false} />
           <Button width={110} height={35} text="Start"/>

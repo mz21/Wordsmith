@@ -8,11 +8,10 @@ var {width} = Dimensions.get('window');
 class HeaderBar extends React.Component {
   props: {
     title: React.PropTypes.string,
-    width: React.PropTypes.number
   };
   render() {
     return (
-      <View style={[styles.headerBar, {width: this.props.width}]}>
+      <View style={[styles.headerBar]}>
           <Text style={
             {
               height: 28,
@@ -34,6 +33,7 @@ var styles = StyleSheet.create({
   headerBar: {
     flexDirection: 'row',
     height: 60,
+    width: width,
     backgroundColor: 'rgb(249,249,249)',
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(210,210,210, 0.5)',
