@@ -9,26 +9,14 @@ export default class ProgressBar extends React.Component {
   };
 
   render() {
-    var width = (this.props.length * 1.0) / this.props.total;
-    var completedCount = [];
-    for(var i = 0; i < this.props.completed; i++) {
-      completedCount.push(i);
-    }
-
-    const completed = completedCount.map((key) =>
-      <View key={key} completed={true} style={[styles.bar, styles.completedBar, {width: width}]}></View>
-    );
-    var remainingCount = [];
-    for(var i = this.props.completed; i < this.props.total; i++) {
-      remainingCount.push(i);
-    }
-    const remaining = remainingCount.map((key) =>
-      <View key={key} completed={false} style={[styles.bar, {width: width}]}></View>
-    );
+    var completedWidth = this.props.completed * 1.0 / this.props.total;
+    var remainingWidth = 1 - completedWidth;
     return (
       <View style={[styles.progressBar, {width: this.props.length}]}>
-        {completed}
-        {remaining}
+        <View width={this.props.length * completedWidth} style={styles.completedBar}>
+        </View>
+        <View width={this.props.length * remainingWidth} style={styles.bar}>
+        </View>
       </View>
     );
   }
@@ -37,7 +25,7 @@ export default class ProgressBar extends React.Component {
 
 var styles = StyleSheet.create({
   progressBar: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   bar: {
     backgroundColor: 'gray',
