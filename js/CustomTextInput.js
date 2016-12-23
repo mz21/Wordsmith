@@ -1,9 +1,9 @@
 var React = require('React');
 var StyleSheet = require('StyleSheet');
 var View = require('View');
-var Text = require('Text');
+var TextInput = require('TextInput');
 
-class CustomTextInput extends React.Component {
+export default class CustomTextInput extends React.Component {
   props: {
     value: React.PropTypes.string,
     width: React.PropTypes.number,
@@ -12,9 +12,7 @@ class CustomTextInput extends React.Component {
   render() {
     return (
       <View style={[styles.textInput, {width: this.props.width, height: this.props.height}]}>
-        <Text style={styles.text}>
-          {this.props.value}
-        </Text>
+        <TextInput value={this.props.value} style={[styles.text, {width: this.props.width, height: this.props.height}]} />
       </View>
     );
   }
@@ -34,5 +32,3 @@ var styles = StyleSheet.create({
     paddingLeft: 7
   }
 });
-
-module.exports = CustomTextInput;
