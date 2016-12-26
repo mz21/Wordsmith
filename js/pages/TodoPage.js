@@ -12,13 +12,14 @@ import WordEntry from '../WordEntry';
 var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
   props: {
-  };
+    onTab: React.PropTypes.func
+  }
   render() {
     return (
       <View style={styles.todoLayout}>
         <View style={styles.progressSection}>
           <ProgressCircle size={80} showsText formatText={function() {return '0/18';}} progress={0.2} color={'rgba(197,111,255, 1)'} thickness={5} unfilledColor={'rgba(197,111,255, 0.35)'} borderWidth={0} textStyle={styles.progressCircleText} indeterminate={false} />
-          <Button width={110} height={35} text="Start"/>
+          <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
         </View>
         <ScrollView contentContainerStyle={styles.wordEntries}>
           <WordEntry word="homen" />

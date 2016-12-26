@@ -5,11 +5,12 @@ class Button extends React.Component {
   props: {
     height: React.PropTypes.number,
     width: React.PropTypes.number,
-    text: React.PropTypes.string
+    text: React.PropTypes.string,
+    onPress: React.PropTypes.func
   };
   render() {
     return (
-      <TouchableOpacity style={[styles.button, {width: this.props.width, height: this.props.height}]}>
+      <TouchableOpacity style={[styles.button, {width: this.props.width, height: this.props.height}]} onPress={this.props.onPress}>
         <Text style={styles.buttonText}>
           {this.props.text}
         </Text>

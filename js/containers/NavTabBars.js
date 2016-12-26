@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { switchTab } from '../../data/actions'
-import {NavTabBars as DumbNavTabBars} from '../NavTabBars'
+import {default as DumbNavTabBars} from '../NavTabBars'
 
 const mapStateToProps = (state) => {
   return {
@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const NavTabBars = connect(
-  {},
+  mapStateToProps,
   mapDispatchToProps
 )(DumbNavTabBars)
 

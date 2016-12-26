@@ -1,14 +1,33 @@
 var React = require('React');
-import TodoPage from '../pages/TodoPage'
+import { connect } from 'react-redux'
+import TodoPage from '../containers/pages/TodoPage'
 import TodoQuizPage from '../pages/TodoQuizPage'
+import * as tabs from '../../data/constants'
 
-export default class NavTabBars extends React.Component {
-  state = {
-
-  }
+class TodoNav extends React.Component {
   render() {
+    let comp = null;
+    if(this.props.tab === tabs.TODOQUIZ) {
+      comp = <TodoQuizPage />
+    }
+    else {
+      comp = <TodoPage />
+    }
     return (
-      <TodoQuizPage />
-    );
+      comp
+    )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    tab: state.navigation.tab
+  }
+}
+
+const SmartTodoNav = connect(
+  mapStateToProps,
+  {}
+)(TodoNav)
+
+export default SmartTodoNav

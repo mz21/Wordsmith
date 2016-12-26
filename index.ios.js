@@ -14,7 +14,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import wordsmithApp from './data/reducers'
 import NavTabBars from './js/containers/NavTabBars';
-import HeaderBar from './js/HeaderBar';
+import HeaderBar from './js/containers/HeaderBar';
 
 var store = createStore(wordsmithApp);
 

@@ -1,4 +1,4 @@
-const initialState = { tab: 'schedule' };
+const initialState = { tab: 'todo' };
 
 const navigation = (state = initialState, action) => {
   if (action.type === 'SWITCH_TAB') {

@@ -1,35 +1,34 @@
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
-import HeaderBar from '../HeaderBar'
+import { toggleTodo } from '../../data/actions'
+import {default as DumbHeaderBar} from '../HeaderBar'
+import * as tabs from '../../data/constants'
 
 const getTitle = (tab) => {
-  switch (navigation) {
-    case 'SHOW_ALL':
-      return todos
-    case 'SHOW_COMPLETED':
-      return todos.filter(t => t.completed)
-    case 'SHOW_ACTIVE':
-      return todos.filter(t => !t.completed)
+  switch (tab) {
+    case tabs.TODO:
+      return "Today's Todos"
+    case tabs.ADD:
+      return "Add a Word"
+    case tabs.WORDS:
+      return "List of Words"
+    case tabs.CALENDAR:
+      return "Calendar"
+    case tabs.PROFILE:
+      return "Profile"
+    default:
+      return "Today's Todos"
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    title: getTitle(state.tab)
+    title: getTitle(state.navigation.tab)
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onTodoClick: (id) => {
-      dispatch(toggleTodo(id))
-    }
-  }
-}
-
-const VisibleTodoList = connect(
+const HeaderBar = connect(
   mapStateToProps,
-  mapDispatchToProps
-)(HeaderBar)
+  {}
+)(DumbHeaderBar)
 
-export default VisibleTodoList
+export default HeaderBar

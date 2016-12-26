@@ -1,17 +1,16 @@
 var React = require('React');
 import {TabBarIOS} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import TodoPage from './pages/TodoPage'
-import TodoQuizPage from './pages/TodoQuizPage'
 import AddPage from './pages/AddPage'
 import WordsPage from './pages/WordsPage'
 import CalendarPage from './pages/CalendarPage'
 import ProfilePage from './pages/ProfilePage'
-import TodoNav from './containers/TodoNav'
+import SmartTodoNav from './containers/TodoNav'
+import * as tabs from '../data/constants'
 
 class NavTabBars extends React.Component {
   state = {
-    selectedTab: 'todo'
+    selectedTab: tabs.TODO
   };
   render() {
     return (
@@ -22,23 +21,25 @@ class NavTabBars extends React.Component {
           title="Todo"
           iconName="check-box"
           selectedIconName="check-box"
-          selected={this.state.selectedTab === 'todo'}
+          selected={this.state.selectedTab === tabs.TODO}
           onPress={() => {
             this.setState({
-              selectedTab: 'todo'
+              selectedTab: tabs.TODO
             });
+            this.props.onTab(tabs.TODO)
          }}>
-          <TodoNav />
+          <SmartTodoNav />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Add"
           iconName="add-circle-outline"
           selectedIconName="add-circle-outline"
-          selected={this.state.selectedTab === 'add'}
+          selected={this.state.selectedTab === tabs.ADD}
           onPress={() => {
            this.setState({
-             selectedTab: 'add',
+             selectedTab: tabs.ADD,
            });
+           this.props.onTab(tabs.ADD)
          }}
           >
           <AddPage />
@@ -47,11 +48,12 @@ class NavTabBars extends React.Component {
           title="Words"
           iconName="view-list"
           selectedIconName="view-list"
-          selected={this.state.selectedTab === 'words'}
+          selected={this.state.selectedTab === tabs.WORDS}
           onPress={() => {
            this.setState({
-             selectedTab: 'words',
+             selectedTab: tabs.WORDS,
            });
+           this.props.onTab(tabs.WORDS)
          }}
           >
           <WordsPage />
@@ -60,11 +62,12 @@ class NavTabBars extends React.Component {
           title="Calendar"
           iconName="schedule"
           selectedIconName="schedule"
-          selected={this.state.selectedTab === 'calendar'}
+          selected={this.state.selectedTab === tabs.CALENDAR}
           onPress={() => {
            this.setState({
-             selectedTab: 'calendar',
+             selectedTab: tabs.CALENDAR,
            });
+           this.props.onTab(tabs.CALENDAR)
          }}
           >
           <CalendarPage />
@@ -73,11 +76,12 @@ class NavTabBars extends React.Component {
           title="Profile"
           iconName="person"
           selectedIconName="person"
-          selected={this.state.selectedTab === 'profile'}
+          selected={this.state.selectedTab === tabs.PROFILE}
           onPress={() => {
            this.setState({
-             selectedTab: 'profile',
+             selectedTab: tabs.PROFILE,
            });
+           this.props.onTab(tabs.PROFILE)
          }}
           >
           <ProfilePage />
