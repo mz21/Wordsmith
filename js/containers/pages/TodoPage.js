@@ -6,7 +6,7 @@ import * as tabs from '../../../data/constants'
 
 const mapStateToProps = (state) => {
   return {
-    tab: state.navigation.tab
+    todos: state.todos.todos
   }
 }
 
@@ -14,14 +14,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onTab: () => {
       dispatch(switchTab(tabs.TODOQUIZ))
-    }  
+    }
   }
 }
 
 const TodoPage = connect(
-  state => {
-    return {}
-  },
+  mapStateToProps,
   mapDispatchToProps
 )(DumbTodoPage)
 

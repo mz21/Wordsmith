@@ -12,9 +12,13 @@ import WordEntry from '../WordEntry';
 var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
   props: {
-    onTab: React.PropTypes.func
+    onTab: React.PropTypes.func,
+    todos: React.PropTypes.array
   }
   render() {
+    const wordEntries = this.props.todos.map((todo) =>
+      <WordEntry word={todo.text} />
+    );
     return (
       <View style={styles.todoLayout}>
         <View style={styles.progressSection}>
@@ -22,18 +26,7 @@ class TodoPage extends React.Component {
           <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
         </View>
         <ScrollView contentContainerStyle={styles.wordEntries}>
-          <WordEntry word="homen" />
-          <WordEntry word="mulheres" />
-          <WordEntry word="obrigado" />
-          <WordEntry word="fogo" />
-          <WordEntry word="vermelho" />
-          <WordEntry word="tudo bom" />
-          <WordEntry word="homen" />
-          <WordEntry word="mulheres" />
-          <WordEntry word="obrigado" />
-          <WordEntry word="fogo" />
-          <WordEntry word="vermelho" />
-          <WordEntry word="tudo bom" />
+          {wordEntries}
         </ScrollView>
       </View>
     );

@@ -1,4 +1,6 @@
-const initialState = { tab: 'todo' };
+import * as tabs from '../constants'
+
+const initialState = { tab: tabs.TODO };
 
 const navigation = (state = initialState, action) => {
   if (action.type === 'SWITCH_TAB') {
