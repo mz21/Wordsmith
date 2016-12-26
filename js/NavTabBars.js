@@ -1,5 +1,5 @@
 var React = require('React');
-import {TabBarIOS, StyleSheet} from 'react-native';
+import {TabBarIOS} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import TodoPage from './pages/TodoPage'
 import TodoQuizPage from './pages/TodoQuizPage'
@@ -7,10 +7,11 @@ import AddPage from './pages/AddPage'
 import WordsPage from './pages/WordsPage'
 import CalendarPage from './pages/CalendarPage'
 import ProfilePage from './pages/ProfilePage'
+import TodoNav from './containers/TodoNav'
 
 class NavTabBars extends React.Component {
   state = {
-    selectedTab: 'todo',
+    selectedTab: 'todo'
   };
   render() {
     return (
@@ -23,11 +24,11 @@ class NavTabBars extends React.Component {
           selectedIconName="check-box"
           selected={this.state.selectedTab === 'todo'}
           onPress={() => {
-           this.setState({
-             selectedTab: 'todo',
-           });
+            this.setState({
+              selectedTab: 'todo'
+            });
          }}>
-          <TodoQuizPage />
+          <TodoNav />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Add"
@@ -85,9 +86,5 @@ class NavTabBars extends React.Component {
     );
   }
 }
-
-
-var styles = StyleSheet.create({
-});
 
 module.exports = NavTabBars;

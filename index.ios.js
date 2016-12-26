@@ -12,10 +12,11 @@ import {
 } from 'react-native';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import NavTabBars from './js/NavTabBars';
+import wordsmithApp from './data/reducers'
+import NavTabBars from './js/containers/NavTabBars';
 import HeaderBar from './js/HeaderBar';
 
-var store = createStore(todoApp);
+var store = createStore(wordsmithApp);
 
 export default class Wordsmith extends Component {
   render() {
