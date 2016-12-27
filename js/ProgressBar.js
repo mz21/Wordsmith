@@ -25,7 +25,7 @@ export default class ProgressBar extends React.Component {
 
 var styles = StyleSheet.create({
   progressBar: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   bar: {
     backgroundColor: 'gray',
