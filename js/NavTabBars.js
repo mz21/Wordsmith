@@ -59,20 +59,6 @@ class NavTabBars extends React.Component {
           <WordsPage />
         </Icon.TabBarItem>
         <Icon.TabBarItem
-          title="Calendar"
-          iconName="schedule"
-          selectedIconName="schedule"
-          selected={this.state.selectedTab === tabs.CALENDAR}
-          onPress={() => {
-           this.setState({
-             selectedTab: tabs.CALENDAR,
-           });
-           this.props.onTab(tabs.CALENDAR)
-         }}
-          >
-          <CalendarPage />
-        </Icon.TabBarItem>
-        <Icon.TabBarItem
           title="Profile"
           iconName="person"
           selectedIconName="person"
