@@ -15,6 +15,7 @@ import { createStore } from 'redux'
 import wordsmithApp from './data/reducers'
 import NavTabBars from './js/containers/NavTabBars';
 import HeaderBar from './js/containers/HeaderBar';
+import c
 
 var store = createStore(wordsmithApp);
 

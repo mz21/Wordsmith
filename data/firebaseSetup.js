@@ -11,4 +11,5 @@ var firebaseConfig = {
   storageBucket: config.FIREBASE_STORAGE_BUCKET
 };
 firebase.initializeApp(firebaseConfig);
-var database = firebase.database();
+export const database = firebase.database();
+export const storage = firebase.storage();
