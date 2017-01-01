@@ -17,9 +17,7 @@ class WordEntry extends React.Component {
         <Text style={styles.text}>
           {this.props.word}
         </Text>
-        <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}>
-
-        </Image>
+        <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
       </View>
     );
   }
