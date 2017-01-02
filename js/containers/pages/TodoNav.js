@@ -1,8 +1,8 @@
 var React = require('React');
 import { connect } from 'react-redux'
-import TodoPage from '../containers/pages/TodoPage'
-import TodoQuizPage from '../containers/pages/TodoQuizPage'
-import * as tabs from '../../data/constants'
+import TodoPage from './TodoPage'
+import TodoQuizPage from './TodoQuizPage'
+import * as tabs from '../../../data/constants'
 
 class TodoNav extends React.Component {
   render() {

@@ -2,10 +2,10 @@ var React = require('React');
 import {TabBarIOS} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AddPage from './pages/AddPage'
-import WordsPage from './pages/WordsPage'
+import WordsPage from './containers/pages/WordsPage'
 import CalendarPage from './pages/CalendarPage'
 import ProfilePage from './pages/ProfilePage'
-import SmartTodoNav from './containers/TodoNav'
+import SmartTodoNav from './containers/pages/TodoNav'
 import * as tabs from '../data/constants'
 
 class NavTabBars extends React.Component {

@@ -11,13 +11,13 @@ import {
   View,
 } from 'react-native';
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import wordsmithApp from './data/reducers'
 import NavTabBars from './js/containers/NavTabBars';
 import HeaderBar from './js/containers/HeaderBar';
-import c
+import thunkMiddleware from 'redux-thunk'
 
-var store = createStore(wordsmithApp);
+var store = createStore(wordsmithApp, applyMiddleware(thunkMiddleware));
 
 export default class Wordsmith extends Component {
   render() {
