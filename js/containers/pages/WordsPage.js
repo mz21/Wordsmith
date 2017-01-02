@@ -1,12 +1,12 @@
 var React = require('React');
 import { connect } from 'react-redux'
-import { getWords } from '../../../data/actions'
+import { loadWordsRequest } from '../../../data/actions'
 import {default as DumbWordsPage} from '../../pages/WordsPage'
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onLoad: () => {
-      dispatch(getWords())
+      dispatch(loadWordsRequest())
     }
   }
 }
