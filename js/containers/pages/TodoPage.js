@@ -22,7 +22,8 @@ const mapStateToProps = (state) => {
     uncompletedTodos: uncompleted,
     completedTodos: completed,
     completed: completedTotal,
-    total: todosTotal
+    total: todosTotal,
+    isLoading: state.todos.isLoading
   }
 }
 

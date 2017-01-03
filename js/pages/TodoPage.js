@@ -2,8 +2,9 @@ var React = require('React');
 var StyleSheet = require('StyleSheet');
 var View = require('View');
 var ScrollView = require('ScrollView');
-var Text = require('Text')
+var Text = require('Text');
 var Image = require('Image');
+var ActivityIndicator = require('ActivityIndicator');
 var Dimensions = require('Dimensions');
 import ProgressCircle from 'react-native-progress/Circle';
 import Button from '../Button';
@@ -17,7 +18,8 @@ class TodoPage extends React.Component {
     uncompletedTodos: React.PropTypes.array,
     completedTodos: React.PropTypes.array,
     completed: React.PropTypes.number,
-    total: React.PropTypes.number
+    total: React.PropTypes.number,
+    isLoading: React.PropTypes.bool
   }
   componentWillMount() {
     this.props.onLoad();
@@ -29,6 +31,15 @@ class TodoPage extends React.Component {
     const completedWords = this.props.completedTodos.map((todo) =>
       <WordEntry word={todo.text} key={todo.id}/>
     );
+    if(this.props.isLoading) {
+      return (
+        <ActivityIndicator
+          animating={true}
+          size="small"
+          style={{flex: 1}}
+        />
+      )
+    }
     return (
       <View style={styles.todoLayout}>
         <View style={styles.progressSection}>
