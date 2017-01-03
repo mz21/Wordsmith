@@ -9,9 +9,9 @@ var completeTodo = (id) => ({
   id
 });
 var addReviewSessionRequest = (data) => ({
-  var {wordKey, success} = data;
+  var {id, success} = data;
   return (dispatch) => {
-    var wordRef = database.ref('/users/' + 'test/words/' + wordKey);
+    var wordRef = database.ref('/users/' + 'test/words/' + id);
     var nextReviewTime = Date.now();
     nextReviewTime.setDate(nextReviewTime.getDate() + 1);
     nextReviewTime.setHours(0);
@@ -28,7 +28,7 @@ var addReviewSessionRequest = (data) => ({
       success
     });
 
-    dispatch(completeTodo(wordKey));
+    dispatch(completeTodo(id));
   }
 })
 
