@@ -13,13 +13,16 @@ var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
   props: {
     onTab: React.PropTypes.func,
+    onLoad: React.PropTypes.func,
     uncompletedTodos: React.PropTypes.array,
     completedTodos: React.PropTypes.array,
     completed: React.PropTypes.number,
     total: React.PropTypes.number
   }
+  componentWillMount() {
+    this.props.onLoad();
+  }
   render() {
-    var test = this.props.completed;
     const uncompletedWords = this.props.uncompletedTodos.map((todo) =>
       <WordEntry word={todo.text} key={todo.id}/>
     );

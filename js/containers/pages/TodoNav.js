@@ -2,7 +2,7 @@ var React = require('React');
 import { connect } from 'react-redux'
 import TodoPage from './TodoPage'
 import TodoQuizPage from './TodoQuizPage'
-import * as tabs from '../../../data/constants'
+import * as tabs from '../../../data/commons'
 
 class TodoNav extends React.Component {
   render() {

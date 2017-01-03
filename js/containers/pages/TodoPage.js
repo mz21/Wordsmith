@@ -1,8 +1,8 @@
 var React = require('React');
 import { connect } from 'react-redux'
-import { switchTab } from '../../../data/actions'
+import { switchTab, loadTodosRequest } from '../../../data/actions'
 import {default as DumbTodoPage} from '../../pages/TodoPage'
-import * as tabs from '../../../data/constants'
+import * as tabs from '../../../data/commons'
 
 const getCompletedTodos = (todos) => {
   return todos.filter(todo => todo.completed);
@@ -28,6 +28,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onLoad: () => {
+      dispatch(loadTodosRequest())
+    },
     onTab: () => {
       dispatch(switchTab(tabs.TODOQUIZ))
     }

@@ -9,9 +9,11 @@ import SearchBar from '../SearchBar';
 class WordsPage extends React.Component {
   props: {
     onLoad: React.PropTypes.func
-  };
+  }
+  componentWillMount() {
+    this.props.onLoad();    
+  }
   render() {
-    this.props.onLoad();
     return (
       <View style={styles.container}>
         <FilterTabs />

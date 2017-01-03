@@ -42,3 +42,6 @@ android/keystores/debug.keystore
 
 # secret configs
 config.js
+
+# tests
+tests/

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { toggleTodo } from '../../data/actions'
 import {default as DumbHeaderBar} from '../HeaderBar'
-import * as tabs from '../../data/constants'
+import * as tabs from '../../data/commons'
 
 const getTitle = (tab) => {
   switch (tab) {

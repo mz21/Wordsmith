@@ -1,4 +1,4 @@
-import * as tabs from '../constants'
+import * as tabs from '../commons'
 
 const initialState = { tab: tabs.TODO };
 

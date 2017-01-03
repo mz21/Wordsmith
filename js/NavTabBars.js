@@ -6,7 +6,7 @@ import WordsPage from './containers/pages/WordsPage'
 import CalendarPage from './pages/CalendarPage'
 import ProfilePage from './pages/ProfilePage'
 import SmartTodoNav from './containers/pages/TodoNav'
-import * as tabs from '../data/constants'
+import * as tabs from '../data/commons'
 
 class NavTabBars extends React.Component {
   state = {

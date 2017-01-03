@@ -2,7 +2,6 @@ var React = require('React');
 import { connect } from 'react-redux'
 import { addReviewSessionRequest } from '../../../data/actions'
 import {default as DumbTodoQuizPage} from '../../pages/TodoQuizPage'
-import * as tabs from '../../../data/constants'
 
 const getUncompletedTodos = (todos) => {
   return todos.filter(todo => !todo.completed);
