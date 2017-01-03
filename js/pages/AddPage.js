@@ -12,15 +12,20 @@ var {width, height} = Dimensions.get('window');
 class AddPage extends React.Component {
   props: {
     addWord: React.PropTypes.func
-  };
+  }
   state = {
-    imagePath: 'test.jpg',
-    lastUpdated: 0,
-    timesForgotten: 0,
-    timesRemembered: 0,
-    translation: 'to want',
-    word: 'quero'
-  };
+    imagePath: 'time.jpg',
+    translation: 'when',
+    word: 'quando'
+  }
+
+  //when you reviewed and success or failure
+  onChangeTranslation = (text) => {
+    this.setState({translation: text});
+  }
+  onChangeWord = (text) => {
+    this.setState({word: text});
+  }
   render() {
     return (
       <View style={styles.wrapper}>
@@ -31,10 +36,10 @@ class AddPage extends React.Component {
               Images help you remember things
             </Text>
           </View>
-          <CustomTextInput value='Enter the word (e.g. Bonjour)' width={width*0.7} height={35}/>
-          <CustomTextInput value='Enter the translation (e.g. Hello)' width={width*0.7} height={35}/>
+          <CustomTextInput placeholder='Enter the word (e.g. Bonjour)' width={width*0.7} height={35} onChangeText={this.onChangeWord}/>
+          <CustomTextInput placeholder='Enter the translation (e.g. Hello)' width={width*0.7} height={35} onChangeText={this.onChangeTranslation}/>
           <View style={styles.buttonSection}>
-            <Button text="Add this Word" width={110} height={35} onPress={() => {this.props.addWord(this.state)}}/>
+            <Button text="Add this Word" width={110} height={35} onPress={() => { this.props.addWord(this.state);}}/>
             <Button text="Start Over" width={110} height={35} />
           </View>
         </View>

@@ -17,18 +17,25 @@ var loadWordsRequest = () => {
 }
 
 var addWordRequest = (data) => {
-  alert(data);
-  var {imagePath, lastUpdated, timesForgotten, timesRemembered, translation, word} = data;
+  var {imagePath, translation, word} = data;
+  var createTime = Date.now();
+  var nextReviewTime = new Date(createTime);
+  nextReviewTime.setDate(nextReviewTime.getDate() + 1);
+  nextReviewTime.setHours(0);
+  nextReviewTime.setMinutes(0);
+  nextReviewTime.setSeconds(0);
+  nextReviewTime.setMilliseconds(0);
+  nextReviewTime = Date.parse(nextReviewTime);
   return (dispatch) => {
     var firebaseRef = database.ref('/users/' + 'test/words').push();
     firebaseRef.set({
       imagePath,
-      lastUpdated,
-      timesForgotten,
-      timesRemembered,
       translation,
-      word
+      word,
+      nextReviewTime,
+      createTime
     });
+
     dispatch(addWord());
   }
 }

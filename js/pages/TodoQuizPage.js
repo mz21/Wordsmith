@@ -27,8 +27,8 @@ export default class TodoQuizPage extends React.Component {
           {this.props.word}
         </Text>
         <View style={styles.buttonSection}>
-          <CircularButton size={110} text="Don't Know" onPress={() => this.props.onPress(this.props.id)} />
-          <CircularButton size={110} text="Got It!" onPress={() => this.props.onPress(this.props.id)} />
+          <CircularButton size={110} text="Don't Know" onPress={() => this.props.onPress({id: this.props.id, success: false})} />
+          <CircularButton size={110} text="Got It!" onPress={() => this.props.onPress({id: this.props.id, success: true})} />
         </View>
       </View>
     );

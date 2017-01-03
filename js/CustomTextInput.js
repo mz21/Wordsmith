@@ -5,14 +5,17 @@ var TextInput = require('TextInput');
 
 export default class CustomTextInput extends React.Component {
   props: {
-    value: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
     width: React.PropTypes.number,
-    height: React.PropTypes.number
+    height: React.PropTypes.number,
+    onChangeText: React.PropTypes.string
   };
   render() {
     return (
       <View style={[styles.textInput, {width: this.props.width, height: this.props.height}]}>
-        <TextInput value={this.props.value} style={[styles.text, {width: this.props.width, height: this.props.height}]} />
+        <TextInput placeholder={this.props.placeholder}
+        onChangeText={(text) => {this.props.onChangeText(text)}}
+        style={[styles.text, {width: this.props.width, height: this.props.height}]} />
       </View>
     );
   }
@@ -26,7 +29,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    color: 'rgb(147,147,147)',
+    color: 'rgb(35,35,35)',
     fontFamily: 'Avenir Next',
     fontSize: 13,
     paddingLeft: 7
