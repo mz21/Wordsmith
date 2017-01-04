@@ -27,12 +27,12 @@ class TodoPage extends React.Component {
     this.props.setTodos(updated);
   }
   render() {
-    // const uncompletedWords = this.props.uncompletedTodos.map((todo) =>
-    //   <WordEntry word={todo.text} key={todo.id}/>
-    // );
-    // const completedWords = this.props.completedTodos.map((todo) =>
-    //   <WordEntry word={todo.text} key={todo.id}/>
-    // );
+    const uncompletedWords = this.props.uncompletedTodos.map((todo) =>
+      <WordEntry word={todo.word} key={todo.id}/>
+    );
+    const completedWords = this.props.completedTodos.map((todo) =>
+      <WordEntry word={todo.word} key={todo.id}/>
+    );
     if(this.props.isLoading) {
       return (
         <ActivityIndicator
@@ -42,8 +42,7 @@ class TodoPage extends React.Component {
         />
       )
     }
-    //          {uncompletedWords}
-    //          {completedWords}
+
     return (
       <View style={styles.todoLayout}>
         <View style={styles.progressSection}>
@@ -51,7 +50,8 @@ class TodoPage extends React.Component {
           <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
         </View>
         <ScrollView contentContainerStyle={styles.wordEntries}>
-
+          {uncompletedWords}
+          {completedWords}
         </ScrollView>
       </View>
     );
