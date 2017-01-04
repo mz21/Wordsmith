@@ -1,6 +1,6 @@
 var React = require('React');
 import { connect } from 'react-redux'
-// import { } from '../../../data/actions'
+import { completeTodoRequest } from '../../../data/actions'
 import {default as DumbTodoQuizPage} from '../../pages/TodoQuizPage'
 
 const mapStateToProps = (state) => {
@@ -8,6 +8,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onPress: (id) => {
+      dispatch(completeTodoRequest(id))
+    }
   }
 }
 

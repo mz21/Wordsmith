@@ -1,5 +1,21 @@
 import {database} from '../firebaseSetup';
 
+var completeTodo = (id) => {
+  return {
+    type: 'COMPLETE_TODO',
+    id
+  }
+}
+
+
+var completeTodoRequest = (id) => {
+  return (dispatch) => {
+    database.ref('/users/' + 'test/todos' + id).update({completed: true});
+    // set word success/failure to review session + update  nextReviewTime
+    dispatch(completeTodo(id))
+  }
+}
+
 var loadTodos = (words, time) => {
   var todos = Object.keys(words).map((key) => {
     var {word, translation, completed, imagePath} = words[key];
@@ -54,5 +70,6 @@ var setTodosRequest = (updated) => {
 
 module.exports = {
   loadTodos,
-  setTodosRequest
+  setTodosRequest,
+  completeTodoRequest
 }

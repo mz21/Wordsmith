@@ -7,9 +7,17 @@ const todos = (state = todosInitialState, action) => {
     case 'LOAD_TODOS':
       return {
         ...state,
-        timeOfLastUpdate: action.lastUpdtedTime,
+        timeOfLastUpdate: action.lastUpdatedTime,
         todos: action.todos,
         isLoading: false
+      }
+    case 'COMPLETE_TODO':
+      return {
+        ...state,
+        todos: state.todos.map(todo => {
+          todo.completed = true;
+          return todo;
+        })
       }
     default:
       return state;
