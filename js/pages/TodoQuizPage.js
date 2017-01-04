@@ -21,7 +21,7 @@ export default class TodoQuizPage extends React.Component {
     return (
       <View style={styles.container}>
         <ProgressBar completed={this.props.completed} total={this.props.total} length={width*0.7} />
-        <Image source={{uri: this.props.image}}
+        <Image source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
        style={{width: width * 0.7, height: width * 0.7}} />
         <Text>
           {this.props.word}

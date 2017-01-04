@@ -1,4 +1,5 @@
 import {database} from '../firebaseSetup';
+import * as commons from '../commons'
 
 var completeTodo = (id) => {
   return {
@@ -8,10 +9,19 @@ var completeTodo = (id) => {
 }
 
 
-var completeTodoRequest = (id) => {
+var completeTodoRequest = (data) => {
+  var {id, success} = data;
   return (dispatch) => {
-    database.ref('/users/' + 'test/todos' + id).update({completed: true});
-    // set word success/failure to review session + update  nextReviewTime
+    database.ref('/users/' + 'test/todos/' + id).update({completed: true});
+    let reviewRef = database.ref('/users/' + '/test/words/' + id + '/reviews').push();
+    reviewRef.set({reviewTime: Date.now(), success});
+    var nextReviewTime = new Date(Date.now());
+    nextReviewTime.setDate(nextReviewTime.getDate() + 1);
+    nextReviewTime = commons.convertToMidnight(nextReviewTime);
+    let wordRef = database.ref('/users/' + '/test/words/' + id).update({
+      nextReviewTime
+    })
+    // update nextReviewTime
     dispatch(completeTodo(id))
   }
 }
@@ -37,15 +47,16 @@ var loadTodos = (words, time) => {
 var setTodosRequest = (updated) => {
   return (dispatch) => {
     if(!updated) {
-      database.ref('/users/' + 'test/lastUpdatedTime').set({time: Date.now()}).then(() => {
+      let updatedTime = Date.now();
+      database.ref('/users/' + 'test/lastUpdatedTime').set({time: updatedTime}).then(() => {
+        //add set time of last update logic
         database.ref('/users/' + 'test/words').once('value').then((snapshot) => {
           var words = snapshot.val();
           database.ref('/users/' + 'test/todos').remove();
           for(var key in words) {
             var {nextReviewTime, imagePath, word, translation} = words[key];
             if(nextReviewTime <= Date.now()) {
-              console.log(word);
-              let wordRef = database.ref('/users/' + 'test/todos').push();
+              let wordRef = database.ref('/users/' + 'test/todos/' + key);
               wordRef.set({imagePath, word, translation, completed: false})
             }
           }
@@ -53,7 +64,6 @@ var setTodosRequest = (updated) => {
         .then(() => {
           database.ref('/users/' + 'test/todos').once('value').then((snapshot) => {
             let words = snapshot.val();
-            console.log(words);
             dispatch(loadTodos(words));
           });
         })
@@ -68,8 +78,16 @@ var setTodosRequest = (updated) => {
   }
 }
 
+var setUpdatedTime = (time) => {
+  return {
+    type: 'SET_UPDATED_TIME',
+    lastUpdatedTime: time
+  }
+}
+
 module.exports = {
   loadTodos,
   setTodosRequest,
-  completeTodoRequest
+  completeTodoRequest,
+  setUpdatedTime
 }

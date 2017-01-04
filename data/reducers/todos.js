@@ -15,10 +15,17 @@ const todos = (state = todosInitialState, action) => {
       return {
         ...state,
         todos: state.todos.map(todo => {
-          todo.completed = true;
+          if(todo.id === action.id) {
+            todo.completed = true;
+          }
           return todo;
         })
       }
+    case 'SET_UPDATED_TIME':
+    return {
+      ...state,
+      timeOfLastUpdate: action.lastUpdatedTime
+    }
     default:
       return state;
   }

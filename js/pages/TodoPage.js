@@ -15,23 +15,26 @@ var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
   props: {
     onTab: React.PropTypes.func,
-    timeOfLastUpdate: React.PropTypes.func,
-    setTodos: React.PropTypes.func
+    timeOfLastUpdate: React.PropTypes.number,
+    setTodos: React.PropTypes.func,
+    setUpdatedTime: React.PropTypes.func
   }
   componentWillMount() {
-    let midnightToday = commons.convertToMidnight(new Date(Date.now()));
-    var updated = true;
-    if(this.props.timeOfLastUpdate < midnightToday) {
-      updated = false;
-    }
-    this.props.setTodos(updated);
+    this.props.setUpdatedTime().then(() => {
+      let midnightToday = commons.convertToMidnight(new Date(Date.now()));
+      var updated = true;
+      if(this.props.timeOfLastUpdate < midnightToday) {
+        updated = false;
+      }
+      this.props.setTodos(updated);
+    })
   }
   render() {
     const uncompletedWords = this.props.uncompletedTodos.map((todo) =>
-      <WordEntry word={todo.word} key={todo.id}/>
+      <WordEntry word={todo.word} key={todo.id} textColor={'rgb(200,20,20)'}/>
     );
     const completedWords = this.props.completedTodos.map((todo) =>
-      <WordEntry word={todo.word} key={todo.id}/>
+      <WordEntry word={todo.word} key={todo.id} textColor={'rgb(180,180,180)'}/>
     );
     if(this.props.isLoading) {
       return (

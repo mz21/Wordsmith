@@ -9,12 +9,13 @@ var {width} = Dimensions.get('window');
 class WordEntry extends React.Component {
   props: {
     word: React.PropTypes.string,
-    image: React.PropTypes.string
+    image: React.PropTypes.string,
+    textColor: React.PropTypes.string
   };
   render() {
     return (
       <View style={styles.wordEntry}>
-        <Text style={styles.text}>
+        <Text style={[styles.text, {color: this.props.textColor}]}>
           {this.props.word}
         </Text>
         <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
