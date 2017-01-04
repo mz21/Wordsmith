@@ -1,4 +1,5 @@
 import {database} from '../firebaseSetup';
+import {* as commons} from '../commons';
 
 var loadWords = () => ({
   type: 'LOAD_WORDS'

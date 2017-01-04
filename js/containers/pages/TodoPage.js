@@ -1,6 +1,6 @@
 var React = require('React');
 import { connect } from 'react-redux'
-import { switchTab, loadTodosRequest } from '../../../data/actions'
+import { switchTab, loadTodosRequest, setTodosToday } from '../../../data/actions'
 import {default as DumbTodoPage} from '../../pages/TodoPage'
 import * as tabs from '../../../data/commons'
 
@@ -23,7 +23,8 @@ const mapStateToProps = (state) => {
     completedTodos: completed,
     completed: completedTotal,
     total: todosTotal,
-    isLoading: state.todos.isLoading
+    isLoading: state.todos.isLoading,
+    timeOfLastUpdate: state.todos.timeOfLastUpdate
   }
 }
 
@@ -34,6 +35,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onTab: () => {
       dispatch(switchTab(tabs.TODOQUIZ))
+    },
+    setTodosToday: () => {
+      dispatch(setTodosToday())
     }
   }
 }

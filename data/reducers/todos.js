@@ -36,6 +36,11 @@ const todos = (state = todosInitialState, action) => {
         ...state,
         todos: state.todos.map(t => todo(t, action))
       }
+    case 'SET_UPDATED_TIME':
+      return {
+        ...state,
+        timeOfLastUpdate: action.lastUpdatedTime
+      }
     default:
       return state;
   }

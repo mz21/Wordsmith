@@ -9,19 +9,26 @@ var Dimensions = require('Dimensions');
 import ProgressCircle from 'react-native-progress/Circle';
 import Button from '../Button';
 import WordEntry from '../WordEntry';
+import {* as commons} from '../../../data/commons';
 
 var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
   props: {
     onTab: React.PropTypes.func,
     onLoad: React.PropTypes.func,
+    setTodosToday: React.PropTypes.func,
     uncompletedTodos: React.PropTypes.array,
     completedTodos: React.PropTypes.array,
     completed: React.PropTypes.number,
     total: React.PropTypes.number,
-    isLoading: React.PropTypes.bool
+    isLoading: React.PropTypes.bool,
+    timeOfLastUpdate: React.PropTypes.number
   }
   componentWillMount() {
+    let midnightToday = commons.convertToMidnight(new Date(Date.now()));
+    if(this.props.timeOfLastUpdate < midnightToday) {
+      this.props.setTodosToday();
+    }
     this.props.onLoad();
   }
   render() {
