@@ -1,5 +1,5 @@
 import {database} from '../firebaseSetup';
-import {* as commons} from '../commons';
+import * as commons from '../commons';
 
 var loadWords = () => ({
   type: 'LOAD_WORDS'
@@ -22,11 +22,7 @@ var addWordRequest = (data) => {
   var createTime = Date.now();
   var nextReviewTime = new Date(createTime);
   nextReviewTime.setDate(nextReviewTime.getDate() + 1);
-  nextReviewTime.setHours(0);
-  nextReviewTime.setMinutes(0);
-  nextReviewTime.setSeconds(0);
-  nextReviewTime.setMilliseconds(0);
-  nextReviewTime = Date.parse(nextReviewTime);
+  nextReviewTime = commons.convertToMidnight(nextReviewTime);
   return (dispatch) => {
     var firebaseRef = database.ref('/users/' + 'test/words').push();
     firebaseRef.set({

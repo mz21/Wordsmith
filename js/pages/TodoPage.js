@@ -9,27 +9,30 @@ var Dimensions = require('Dimensions');
 import ProgressCircle from 'react-native-progress/Circle';
 import Button from '../Button';
 import WordEntry from '../WordEntry';
-import {* as commons} from '../../../data/commons';
+import * as commons from '../../data/commons';
 
 var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
   props: {
-    onTab: React.PropTypes.func
+    onTab: React.PropTypes.func,
+    timeOfLastUpdate: React.PropTypes.func,
+    setTodos: React.PropTypes.func
   }
   componentWillMount() {
     let midnightToday = commons.convertToMidnight(new Date(Date.now()));
+    var updated = true;
     if(this.props.timeOfLastUpdate < midnightToday) {
-      this.props.setTodosToday();
+      updated = false;
     }
-    this.props.onLoad();
+    this.props.setTodos(updated);
   }
   render() {
-    const uncompletedWords = this.props.uncompletedTodos.map((todo) =>
-      <WordEntry word={todo.text} key={todo.id}/>
-    );
-    const completedWords = this.props.completedTodos.map((todo) =>
-      <WordEntry word={todo.text} key={todo.id}/>
-    );
+    // const uncompletedWords = this.props.uncompletedTodos.map((todo) =>
+    //   <WordEntry word={todo.text} key={todo.id}/>
+    // );
+    // const completedWords = this.props.completedTodos.map((todo) =>
+    //   <WordEntry word={todo.text} key={todo.id}/>
+    // );
     if(this.props.isLoading) {
       return (
         <ActivityIndicator
@@ -39,6 +42,8 @@ class TodoPage extends React.Component {
         />
       )
     }
+    //          {uncompletedWords}
+    //          {completedWords}
     return (
       <View style={styles.todoLayout}>
         <View style={styles.progressSection}>
@@ -46,8 +51,7 @@ class TodoPage extends React.Component {
           <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
         </View>
         <ScrollView contentContainerStyle={styles.wordEntries}>
-          {uncompletedWords}
-          {completedWords}
+
         </ScrollView>
       </View>
     );
