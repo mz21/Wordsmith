@@ -12,9 +12,8 @@ import {
 } from 'react-native';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import wordsmithApp from './data/reducers'
-import NavTabBars from './js/containers/NavTabBars';
-import HeaderBar from './js/containers/HeaderBar';
+import wordsmithApp from './data/reducers';
+import InitialSetup from './js/containers/pages/InitialSetup';
 import thunkMiddleware from 'redux-thunk';
 
 var store = createStore(wordsmithApp, applyMiddleware(thunkMiddleware));
@@ -23,19 +22,10 @@ export default class Wordsmith extends Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <HeaderBar title="Todos for Today"/>
-          <NavTabBars />
-        </View>
+        <InitialSetup />
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
 AppRegistry.registerComponent('Wordsmith', () => Wordsmith);
