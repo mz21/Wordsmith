@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setTodosRequest, setUpdatedTime } from '../../../data/actions'
+import { setTodosRequest, setUpdatedTime, setWordListRequest} from '../../../data/actions'
 import {default as DumbInitialSetup} from '../../pages/InitialSetup'
 import {database} from '../../../data/firebaseSetup';
 
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
         var updatedTime = snapshot.val().time;
         dispatch(setUpdatedTime(updatedTime));
       });
+    },
+    setWordList: () => {
+      dispatch(setWordListRequest());
     }
   }
 }

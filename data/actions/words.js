@@ -1,21 +1,20 @@
 import {database} from '../firebaseSetup';
 import * as commons from '../commons';
 
-var loadWords = () => ({
-  type: 'LOAD_WORDS'
+var setWordList = (words) => ({
+  type: 'SET_WORD_LIST',
+  words
 });
-var addWord = () => ({
-  type: 'ADD_WORD'
+
+var orderWords = (order) => ({
+  type: 'ORDER_WORDS',
+  order
 })
-var loadWordsRequest = () => {
-  return (dispatch) => {
-    return database.ref('/users/' + 'test/words').limitToFirst(3).once('value')
-    .then((snapshot) => {
-      var words = snapshot.val();
-      dispatch(loadWords(words));
-    }, console.log);
-  }
-}
+
+var addWord = (word) => ({
+  type: 'ADD_WORD',
+  word
+});
 
 var addWordRequest = (data) => {
   var {imagePath, translation, word} = data;
@@ -25,21 +24,48 @@ var addWordRequest = (data) => {
   nextReviewTime = commons.convertToMidnight(nextReviewTime);
   return (dispatch) => {
     var firebaseRef = database.ref('/users/' + 'test/words').push();
-    firebaseRef.set({
+    var values = {
       imagePath,
       translation,
       word,
       nextReviewTime,
       createTime
-    });
+    };
+    firebaseRef.set(values);
 
-    dispatch(addWord());
+    dispatch(addWord({...values, reviews: []}));
+  }
+}
+
+var setWordListRequest = () => {
+  return (dispatch) => {
+    return database.ref('/users/' + 'test/words').once('value', (snapshot) => {
+      var words = snapshot.val();
+      words = Object.keys(words).map((key) => {
+        var {reviews} = words[key];
+        if(reviews) {
+          reviews = Object.keys(reviews).map((key) => {
+            return reviews[key];
+          });
+        }
+        else {
+          reviews = [];
+        }
+        return {
+          ...words[key],
+          reviews,
+          id: key
+        }
+      });
+      dispatch(setWordList(words));
+    });
   }
 }
 
 module.exports = {
-  loadWords,
-  loadWordsRequest,
   addWord,
-  addWordRequest
+  addWordRequest,
+  setWordList,
+  setWordListRequest,
+  orderWords
 };

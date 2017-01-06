@@ -11,7 +11,8 @@ class InitialSetup extends React.Component {
   props: {
     timeOfLastUpdate: React.PropTypes.number,
     setTodos: React.PropTypes.func,
-    setUpdatedTime: React.PropTypes.func
+    setUpdatedTime: React.PropTypes.func,
+    setWordList: React.PropTypes.func
   }
   componentWillMount() {
     this.props.setUpdatedTime().then(() => {
@@ -21,7 +22,8 @@ class InitialSetup extends React.Component {
         updated = false;
       }
       this.props.setTodos(updated);
-    })
+    });
+    this.props.setWordList();
   }
   render() {
     return (

@@ -1,33 +1,23 @@
 var React = require('React');
-var StyleSheet = require('StyleSheet');
-var View = require('View');
-var Text = require('Text');
+import {View, ListView, StyleSheet} from 'react-native';
 import WordItem from '../WordItem';
-import FilterTabs from '../FilterTabs';
+import FilterTabs from '../containers/FilterTabs';
 import SearchBar from '../SearchBar';
 
 class WordsPage extends React.Component {
   props: {
-    onLoad: React.PropTypes.func
-  }
-  componentWillMount() {
-    this.props.onLoad();    
+    words: React.PropTypes.array
   }
   render() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View style={styles.container}>
         <FilterTabs />
         <SearchBar text="Find Word"/>
         <View style={styles.wordItems}>
-        <WordItem />
-        <WordItem />
-        <WordItem />
-        <WordItem />
-        <WordItem />
-        <WordItem />
-        <WordItem />
-        <WordItem />
-        <WordItem />
+          <ListView
+            dataSource={ds.cloneWithRows(this.props.words)}
+            renderRow={(rowData) => <WordItem word={rowData.word}/>} />
         </View>
       </View>
     );

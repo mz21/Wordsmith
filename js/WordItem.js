@@ -7,13 +7,17 @@ var Dimensions = require('Dimensions');
 
 var {width} = Dimensions.get('window');
 class WordItem extends React.Component {
+  props: {
+    word: React.PropTypes.string,
+    nextReviewTime: React.PropTypes.number
+  }
   render() {
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
         <View style={styles.label}>
           <Text style={styles.textWord}>
-            Vermelho
+            {this.props.word}
           </Text>
           <Text style={styles.textCaption}>
             78%  |  Next: 2 days

@@ -1,19 +1,16 @@
 var React = require('React');
 import { connect } from 'react-redux'
-import { loadWordsRequest } from '../../../data/actions'
 import {default as DumbWordsPage} from '../../pages/WordsPage'
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    onLoad: () => {
-      dispatch(loadWordsRequest())
-    }
+    words: state.words
   }
 }
 
 const WordsPage = connect(
-  () => ({}),
-  mapDispatchToProps
+  mapStateToProps,
+  {}
 )(DumbWordsPage)
 
 export default WordsPage
