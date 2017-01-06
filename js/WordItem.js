@@ -4,24 +4,21 @@ var View = require('View');
 var Text = require('Text');
 var Image = require('Image');
 var Dimensions = require('Dimensions');
+import * as commons from '../data/commons'
 
 var {width} = Dimensions.get('window');
 class WordItem extends React.Component {
   props: {
     word: React.PropTypes.string,
     nextReviewTime: React.PropTypes.number,
-    daysUntil: React.PropTypes.number
+    daysUntil: React.PropTypes.number,
+    reviews: React.PropTypes.array
   }
   render() {
-    let daysUntil = null;
-    if(this.props.daysUntil === 0) {
-      daysUntil = 'Today'
-    }
-    else if(this.props.daysUntil === 1) {
-      daysUntil = '1 day'
-    }
-    else {
-      daysUntil = this.props.daysUntil + ' days'
+    var daysUntil = commons.setDaysUntilText(this.props.daysUntil)
+    var accuracy = commons.getReviewsAccuracy(this.props.reviews);
+    if(Number.isInteger(accuracy)) {
+      accuracy += '%'
     }
     return (
       <View style={styles.container}>
@@ -31,7 +28,7 @@ class WordItem extends React.Component {
             {this.props.word}
           </Text>
           <Text style={styles.textCaption}>
-            78%  |  Next: {daysUntil}
+            {accuracy} |  Next: {daysUntil}
           </Text>
         </View>
       </View>

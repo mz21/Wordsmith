@@ -17,7 +17,7 @@ class WordsPage extends React.Component {
         <View style={styles.wordItems}>
           <ListView
             dataSource={ds.cloneWithRows(this.props.words)}
-            renderRow={(rowData) => <WordItem word={rowData.word} daysUntil={rowData.nextReviewTime}/>} />
+            renderRow={(rowData) => <WordItem word={rowData.word} reviews={rowData.reviews} daysUntil={rowData.nextReviewTime}/>} />
         </View>
       </View>
     );

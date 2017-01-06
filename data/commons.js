@@ -27,5 +27,30 @@ module.exports = {
     }
     nextReviewTime = Math.ceil(timeDifference / (1000*60*60*24));
     return nextReviewTime;
+  },
+  setDaysUntilText: (daysUntil) => {
+    let daysUntilText = null;
+    if(daysUntil === 0) {
+      daysUntilText = 'Today'
+    }
+    else if(daysUntil === 1) {
+      daysUntilText = '1 day'
+    }
+    else {
+      daysUntilText = daysUntil + ' days'
+    }
+    return daysUntilText;
+  },
+  getReviewsAccuracy: (reviews) => {
+    if(!reviews || reviews.length === 0) {
+      return 'New Word'
+    }
+    else {
+      let total = reviews.length;
+      let correct = reviews.filter(review => {
+        return review.success
+      }).length;
+      return Math.round(100 * correct/total);
+    }
   }
 }

@@ -22,7 +22,17 @@ const words = (state = initialState, action) => {
         case commons.order.CHRONOLOGICAL:
           return {...state, words: [...state.words].sort((a, b) => {return a.nextReviewTime - b.nextReviewTime})}
         case commons.order.ACCURACY:
-          return state;
+          return {...state, words: [...state.words].sort((a, b) =>
+            {let accuracyA = commons.getReviewsAccuracy(a.reviews);
+            let accuracyB = commons.getReviewsAccuracy(b.reviews);
+            if(!Number.isInteger(accuracyA)) {
+              return 1;
+            }
+            if(!Number.isInteger(accuracyB)) {
+              return -1;
+            }
+            return accuracyA - accuracyB;
+          })}
         default:
           return state;
       }
