@@ -1,5 +1,6 @@
 import {database} from '../firebaseSetup';
 import * as commons from '../commons'
+import {editWordReviewTime, orderWords} from './words'
 
 var completeTodo = (id) => {
   return {
@@ -21,7 +22,8 @@ var completeTodoRequest = (data) => {
     let wordRef = database.ref('/users/' + '/test/words/' + id).update({
       nextReviewTime
     })
-    // update nextReviewTime
+    dispatch(editWordReviewTime({id, nextReviewTime}));
+    dispatch(orderWords(null))
     dispatch(completeTodo(id))
   }
 }

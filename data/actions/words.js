@@ -11,10 +11,21 @@ var orderWords = (order) => ({
   order
 })
 
+var setOrder = (order) => ({
+  type: 'SET_ORDER',
+  order
+})
+
 var addWord = (word) => ({
   type: 'ADD_WORD',
   word
 });
+
+var editWordReviewTime = (data) => ({
+  type: 'EDIT_WORD_REVIEW_TIME',
+  nextReviewTime: data.nextReviewTime,
+  id: data.id
+})
 
 var addWordRequest = (data) => {
   var {imagePath, translation, word} = data;
@@ -33,7 +44,8 @@ var addWordRequest = (data) => {
     };
     firebaseRef.set(values);
 
-    dispatch(addWord({...values, reviews: []}));
+    dispatch(addWord({...values, nextReviewTime: commons.daysUntil(nextReviewTime), reviews: []}));
+    dispatch(orderWords(null));
   }
 }
 
@@ -42,7 +54,7 @@ var setWordListRequest = () => {
     return database.ref('/users/' + 'test/words').once('value', (snapshot) => {
       var words = snapshot.val();
       words = Object.keys(words).map((key) => {
-        var {reviews} = words[key];
+        var {nextReviewTime, reviews} = words[key];
         if(reviews) {
           reviews = Object.keys(reviews).map((key) => {
             return reviews[key];
@@ -51,13 +63,17 @@ var setWordListRequest = () => {
         else {
           reviews = [];
         }
+        nextReviewTime = commons.daysUntil(nextReviewTime);
+
         return {
           ...words[key],
+          nextReviewTime,
           reviews,
           id: key
         }
       });
       dispatch(setWordList(words));
+      dispatch(orderWords(null));
     });
   }
 }
@@ -67,5 +83,7 @@ module.exports = {
   addWordRequest,
   setWordList,
   setWordListRequest,
-  orderWords
+  orderWords,
+  setOrder,
+  editWordReviewTime
 };

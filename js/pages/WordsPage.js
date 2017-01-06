@@ -17,7 +17,7 @@ class WordsPage extends React.Component {
         <View style={styles.wordItems}>
           <ListView
             dataSource={ds.cloneWithRows(this.props.words)}
-            renderRow={(rowData) => <WordItem word={rowData.word}/>} />
+            renderRow={(rowData) => <WordItem word={rowData.word} daysUntil={rowData.nextReviewTime}/>} />
         </View>
       </View>
     );
@@ -27,7 +27,8 @@ class WordsPage extends React.Component {
 var styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 20,
+    marginBottom: 70
   },
   wordItems: {
     alignItems: 'center'

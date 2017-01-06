@@ -1,27 +1,43 @@
-const initialState = [];
+import * as commons from '../commons';
+
+const initialState = {order: commons.order.ALPHABETICAL, words: []};
 
 const words = (state = initialState, action) => {
   switch(action.type) {
     case 'SET_WORD_LIST':
-      return action.words;
+      return {...state, words: action.words};
     case 'ADD_WORD':
-      return [
+      return {
         ...state,
-        action.word
-      ]
+        words: [...state.words, action.word]
+      }
     case 'ORDER_WORDS':
-      switch(action.order) {
-        case 'alphabetical':
-          var sorted = [...state].sort((a, b) => {return a.word > b.word ? 1 : -1})
-          console.log(sorted)
-          return sorted
-        case 'chronological':
-          return [...state].sort((a, b) => {return a.nextReviewTime - b.nextReviewTime})
-        case 'accuracy':
+      let order = state.order
+      if(action.order) {
+        order = action.order
+      }
+      switch(order) {
+        case commons.order.ALPHABETICAL:
+          return {...state, words: [...state.words].sort((a, b) => {return a.word.toLowerCase() > b.word.toLowerCase() ? 1 : -1})}
+        case commons.order.CHRONOLOGICAL:
+          return {...state, words: [...state.words].sort((a, b) => {return a.nextReviewTime - b.nextReviewTime})}
+        case commons.order.ACCURACY:
           return state;
         default:
           return state;
       }
+    case 'SET_ORDER':
+      return {
+        ...state,
+        order: action.order
+      }
+    case 'EDIT_WORD_REVIEW_TIME':
+      return {...state, words: state.words.map(word => {
+          if(word.id === action.id) {
+            word.nextReviewTime = commons.daysUntil(action.nextReviewTime);
+          }
+          return word;
+        })}
     default:
       return state;
   }

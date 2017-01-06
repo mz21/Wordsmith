@@ -4,7 +4,7 @@ import {default as DumbWordsPage} from '../../pages/WordsPage'
 
 const mapStateToProps = (state) => {
   return {
-    words: state.words
+    words: state.words.words
   }
 }
 

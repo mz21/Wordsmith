@@ -9,9 +9,20 @@ var {width} = Dimensions.get('window');
 class WordItem extends React.Component {
   props: {
     word: React.PropTypes.string,
-    nextReviewTime: React.PropTypes.number
+    nextReviewTime: React.PropTypes.number,
+    daysUntil: React.PropTypes.number
   }
   render() {
+    let daysUntil = null;
+    if(this.props.daysUntil === 0) {
+      daysUntil = 'Today'
+    }
+    else if(this.props.daysUntil === 1) {
+      daysUntil = '1 day'
+    }
+    else {
+      daysUntil = this.props.daysUntil + ' days'
+    }
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
@@ -20,7 +31,7 @@ class WordItem extends React.Component {
             {this.props.word}
           </Text>
           <Text style={styles.textCaption}>
-            78%  |  Next: 2 days
+            78%  |  Next: {daysUntil}
           </Text>
         </View>
       </View>
