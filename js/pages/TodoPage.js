@@ -53,7 +53,8 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    width: width
+    width: width,
+    marginBottom: 50
   },
   progressSection: {
     flexDirection: 'row',
