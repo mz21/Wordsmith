@@ -1,45 +1,81 @@
 var React = require('React');
-var StyleSheet = require('StyleSheet');
-var View = require('View');
-var Text = require('Text');
+import {StyleSheet, View, Text, TextInput, Dimensions, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-var Dimensions = require('Dimensions');
+import * as commons from '../data/commons'
 
 var {width} = Dimensions.get('window');
 class SearchBar extends React.Component {
   props: {
-    text: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
+    autoCorrect: React.PropTypes.bool
   };
+  state = {
+    searchBarOffset: (100 - (this.props.placeholder.length > 100 ? 0 : this.props.placeholder.length)) * 0.003956,
+    searchBarWidth: 0.86,
+    active: false,
+    autoCorrect: this.props.autoCorrect ? this.props.autoCorrect : false
+  }
   render() {
+    let cancelButton = null;
+    if(this.state.active) {
+      cancelButton = (
+        <TouchableHighlight underlayColor='pink' onPress={() => {alert('test')}}>
+          <Text style={styles.cancelActive}>Cancel</Text>
+        </TouchableHighlight>
+      )
+    }
     return (
-      <View style={styles.searchBar}>
-        <Icon name="search" size={styles.searchBarText.fontSize} color='rgb(154,154,154)' />
-        <Text style={styles.searchBarText}>
-          {this.props.text}
-        </Text>
+      <View style={styles.container}>
+          <TextInput autoCapitalize='none' autoCorrect={this.state.autoCorrect} placeholder={this.props.placeholder}
+          onFocus={() => {
+            this.setState({searchBarOffset: 0.1,
+              searchBarWidth: 0.72,
+              active: true
+            })
+          }}
+          onChangeText={(text) => {}}
+          style={[styles.searchBar, {paddingLeft: width * this.state.searchBarOffset, width: width * this.state.searchBarWidth}]} />
+          <Icon name="search" size={12} color='rgb(154,154,154)' style={[styles.searchIcon, {left: width * (this.state.searchBarOffset + 0.03)}]} />
+          {cancelButton}
       </View>
     );
   }
 }
 
+var searchBarHeight = 25;
+
 var styles = StyleSheet.create({
+  container: {
+    width: width,
+    height: searchBarHeight,
+    marginTop: 15,
+    marginBottom: 15,
+    flexDirection: 'row'
+  },
+  searchIcon: {
+    position: 'absolute',
+    bottom: searchBarHeight * 0.28,
+    backgroundColor: 'rgb(250,250,251)',
+  },
   searchBar: {
     backgroundColor: 'rgb(250,250,251)',
     borderColor: 'rgb(216,216,216)',
     borderRadius: 5,
     borderWidth: 1,
-    height: 25,
-    width: 0.72 * width,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  searchBarText: {
     fontFamily: 'Avenir Next',
     fontWeight: '400',
     fontSize: 11,
     color: 'rgb(92,92,92)',
-    marginLeft: 5.5
+    marginLeft: 0.07 * width,
+    height: searchBarHeight
+  },
+  cancelActive: {
+    color: commons.PURPLE,
+    fontFamily: 'Avenir Next',
+    width: 0.21 * width,
+    height: searchBarHeight,
+    textAlign: 'center',
+    paddingTop: 2
   }
 });
 

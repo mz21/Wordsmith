@@ -12,8 +12,8 @@ class WordsPage extends React.Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return (
       <View style={styles.container}>
+        <SearchBar placeholder="Find Word"/>
         <FilterTabs />
-        <SearchBar text="Find Word"/>
         <View style={styles.wordItems}>
           <ListView
             dataSource={ds.cloneWithRows(this.props.words)}
@@ -27,7 +27,6 @@ class WordsPage extends React.Component {
 var styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: 20,
     marginBottom: 70
   },
   wordItems: {

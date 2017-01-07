@@ -10,6 +10,7 @@ module.exports = {
     CHRONOLOGICAL: 'CHRONOLOGICAL',
     ACCURACY: 'ACCURACY'
   },
+  PURPLE: 'rgb(116,47,162)',
   convertToMidnight: (date) => {
     var savedDate = new Date();
     savedDate.setDate(date.getDate());

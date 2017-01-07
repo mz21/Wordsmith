@@ -30,7 +30,7 @@ class AddPage extends React.Component {
     return (
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          <SearchBar text="Find Image via Google"/>
+          <SearchBar placeholder="Find Image via Google"/>
           <View style={styles.image}>
             <Text style={styles.imageText}>
               Images help you remember things
