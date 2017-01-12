@@ -18,10 +18,10 @@ class TodoPage extends React.Component {
   }
   render() {
     const uncompletedWords = this.props.uncompletedTodos.map((todo) =>
-      <WordEntry word={todo.word} key={todo.id} textColor={'rgb(200,20,20)'}/>
+      <WordEntry word={todo.word} key={todo.id} textColor={'rgb(60,60,60)'}/>
     );
     const completedWords = this.props.completedTodos.map((todo) =>
-      <WordEntry word={todo.word} key={todo.id} textColor={'rgb(180,180,180)'}/>
+      <WordEntry word={todo.word} key={todo.id} textColor={'rgb(60,179,113)'}/>
     );
     if(this.props.isLoading) {
       return (
