@@ -1,13 +1,20 @@
 var React = require('React');
-import {StyleSheet, ScrollView, View, Text, Dimensions, Image} from 'react-native';
+import {StyleSheet, ScrollView, View, Text, Dimensions, Image, TouchableOpacity} from 'react-native';
 import Button from '../Button'
 
 var {width, height} = Dimensions.get('window');
 export default class AddPage extends React.Component {
+  state = {
+    selectedKey: null
+  }
   render() {
     var images = Array.from(Array(20).keys()).map((key) =>
-      <Image key={key} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-        style={styles.image} />
+      <TouchableOpacity activeOpacity={1} style={styles.image} key={key} onPress={
+          () => {this.setState({selectedKey: key}); }
+        }>
+        <Image source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+          style={[styles.image, key === this.state.selectedKey ? styles.selectedImage : null]} />
+      </TouchableOpacity>
     )
     return (
     <View style={styles.container}>
@@ -30,7 +37,7 @@ var styles = StyleSheet.create({
     height: 0.9 * height
   },
   images: {
-    height: 0.6 * height,
+    height: 0.63 * height,
     borderColor: 'rgb(200,200,200)',
     borderBottomWidth: 1,
     borderTopWidth: 1,
@@ -48,8 +55,14 @@ var styles = StyleSheet.create({
     margin: 5
   },
   addImageSection: {
-    height: 0.15 * height,
+    height: 0.12 * height,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  selectedImage: {
+    backgroundColor: 'black',
+    borderColor: 'purple',
+    borderWidth: 1,
+    opacity: 0.65
   }
 });

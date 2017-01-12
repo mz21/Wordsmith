@@ -16,14 +16,14 @@ class AddPage extends React.Component {
   render() {
     var addComponent = null;
     if(this.state.tab === commons.ADD_FORM) {
-      addComponent = <AddPageForm/>
+      addComponent = <AddPageForm addWord={this.props.addWord}/>
     }
     else if(this.state.tab === commons.ADD_PICKER) {
       addComponent = <AddPageImagePicker/>
     }
     return (
       <View style={styles.wrapper}>
-        <SearchBar onFocus={this.onFocus} onCancel={this.onCancel} placeholder="Find Image via Google"/>
+        <SearchBar onFocus={this.onFocus} onCancel={this.onCancel} onSubmit={this.onSubmit} placeholder="Find Image via Google"/>
         <View style={styles.container}>
           {addComponent}
         </View>
@@ -31,6 +31,11 @@ class AddPage extends React.Component {
     );
   }
   onFocus = () => {
+    if(this.state.tab !== commons.ADD_PICKER) {
+      this.setState({tab: null});
+    }
+  }
+  onSubmit = (text) => {
     this.setState({tab: commons.ADD_PICKER})
   }
   onCancel = () => {

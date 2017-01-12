@@ -9,13 +9,15 @@ class SearchBar extends React.Component {
     placeholder: React.PropTypes.string,
     autoCorrect: React.PropTypes.bool,
     onFocus: React.PropTypes.func,
-    onCancel: React.PropTypes.func
+    onCancel: React.PropTypes.func,
+    onSubmit: React.PropTypes.func
   };
   state = {
     searchBarOffset: (100 - (this.props.placeholder.length > 100 ? 0 : this.props.placeholder.length)) * 0.003956,
     searchBarWidth: 0.86,
     active: false,
     autoCorrect: this.props.autoCorrect ? this.props.autoCorrect : false,
+    text: ''
   }
   render() {
     let cancelButton = null;
@@ -31,15 +33,17 @@ class SearchBar extends React.Component {
     }
     return (
       <View style={styles.container}>
-          <TextInput ref='searchbar' keyboardType='url' autoCapitalize='none' autoCorrect={this.state.autoCorrect} placeholder={this.props.placeholder}
+        <TextInput ref='searchbar' keyboardType='url' autoCapitalize='none' autoCorrect={this.state.autoCorrect} placeholder={this.props.placeholder}
           onFocus={() => {
             this.setActiveSearchBar();
             this.props.onFocus();
           }}
-          onChangeText={(text) => {}}
+          onSubmitEditing={() => {
+            this.props.onSubmit();
+          }}
           style={[styles.searchBar, {paddingLeft: width * this.state.searchBarOffset, width: width * this.state.searchBarWidth}]} />
-          <Icon name="search" size={12} color='rgb(154,154,154)' style={[styles.searchIcon, {left: width * (this.state.searchBarOffset + 0.03)}]} />
-          {cancelButton}
+        <Icon name="search" size={12} color='rgb(154,154,154)' style={[styles.searchIcon, {left: width * (this.state.searchBarOffset + 0.03)}]} />
+        {cancelButton}
       </View>
     );
   }
