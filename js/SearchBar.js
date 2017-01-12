@@ -7,31 +7,34 @@ var {width} = Dimensions.get('window');
 class SearchBar extends React.Component {
   props: {
     placeholder: React.PropTypes.string,
-    autoCorrect: React.PropTypes.bool
+    autoCorrect: React.PropTypes.bool,
+    onFocus: React.PropTypes.func,
+    onCancel: React.PropTypes.func
   };
   state = {
     searchBarOffset: (100 - (this.props.placeholder.length > 100 ? 0 : this.props.placeholder.length)) * 0.003956,
     searchBarWidth: 0.86,
     active: false,
-    autoCorrect: this.props.autoCorrect ? this.props.autoCorrect : false
+    autoCorrect: this.props.autoCorrect ? this.props.autoCorrect : false,
   }
   render() {
     let cancelButton = null;
     if(this.state.active) {
       cancelButton = (
-        <TouchableHighlight underlayColor='pink' onPress={() => {alert('test')}}>
+        <TouchableHighlight underlayColor='pink' onPress={() => {
+            this.setInactiveSearchBar();
+            this.props.onCancel();
+          }}>
           <Text style={styles.cancelActive}>Cancel</Text>
         </TouchableHighlight>
       )
     }
     return (
       <View style={styles.container}>
-          <TextInput autoCapitalize='none' autoCorrect={this.state.autoCorrect} placeholder={this.props.placeholder}
+          <TextInput ref='searchbar' keyboardType='url' autoCapitalize='none' autoCorrect={this.state.autoCorrect} placeholder={this.props.placeholder}
           onFocus={() => {
-            this.setState({searchBarOffset: 0.1,
-              searchBarWidth: 0.72,
-              active: true
-            })
+            this.setActiveSearchBar();
+            this.props.onFocus();
           }}
           onChangeText={(text) => {}}
           style={[styles.searchBar, {paddingLeft: width * this.state.searchBarOffset, width: width * this.state.searchBarWidth}]} />
@@ -39,6 +42,21 @@ class SearchBar extends React.Component {
           {cancelButton}
       </View>
     );
+  }
+  setActiveSearchBar = function() {
+    this.setState({searchBarOffset: 0.1,
+      searchBarWidth: 0.72,
+      active: true
+    })
+  }
+  setInactiveSearchBar = function() {
+    this.setState({
+      searchBarOffset: (100 - (this.props.placeholder.length > 100 ? 0 : this.props.placeholder.length)) * 0.003956,
+      searchBarWidth: 0.86,
+      active: false
+    })
+    this.refs.searchbar.clear();
+    this.refs.searchbar.blur();
   }
 }
 
