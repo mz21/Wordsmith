@@ -1,9 +1,9 @@
 const initialState = {
-  word: null,
-  translation: null,
-  fullUrl: null,
-  thumbnailUrl: null,
-  imageUrls: null
+  word: '',
+  translation: '',
+  fullUrl: '',
+  thumbnailUrl: '',
+  imageUrls: []
 };
 
 const add = (state = initialState, action) => {

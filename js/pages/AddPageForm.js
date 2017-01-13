@@ -38,7 +38,9 @@ export default class AddPageForm extends React.Component {
               {
                 this.props.addWord({
                   word: this.props.word,
-                  translation: this.props.translation
+                  translation: this.props.translation,
+                  thumbnailUrl: this.props.thumbnailUrl,
+                  fullUrl: this.props.fullUrl,
                 });
             }}/>
           <Button text="Start Over" width={110} height={35} onPress={this.props.startOver}/>

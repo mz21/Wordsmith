@@ -28,7 +28,7 @@ var editWordReviewTime = (data) => ({
 })
 
 var addWordRequest = (data) => {
-  var {imagePath, translation, word} = data;
+  var {thumbnailUrl, fullUrl, translation, word} = data;
   var createTime = Date.now();
   var nextReviewTime = new Date(createTime);
   nextReviewTime.setDate(nextReviewTime.getDate() + 1);
@@ -36,7 +36,8 @@ var addWordRequest = (data) => {
   return (dispatch) => {
     var firebaseRef = database.ref('/users/' + 'test/words').push();
     var values = {
-      imagePath,
+      thumbnailUrl,
+      fullUrl,
       translation,
       word,
       nextReviewTime,
