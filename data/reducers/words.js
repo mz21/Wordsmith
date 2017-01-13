@@ -18,7 +18,7 @@ const words = (state = initialState, action) => {
       }
       switch(order) {
         case commons.order.ALPHABETICAL:
-          return {...state, words: [...state.words].sort((a, b) => {return a.word.toLowerCase() > b.word.toLowerCase() ? 1 : -1})}
+          return {...state, words: [...state.words].sort((a, b) => {return a.word.localeCompare(b.word)})}
         case commons.order.CHRONOLOGICAL:
           return {...state, words: [...state.words].sort((a, b) => {return a.nextReviewTime - b.nextReviewTime})}
         case commons.order.ACCURACY:
