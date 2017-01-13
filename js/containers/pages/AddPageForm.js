@@ -1,6 +1,6 @@
 var React = require('React');
 import { connect } from 'react-redux'
-import { changeWord, changeTranslation } from '../../../data/actions/add';
+import { changeWord, changeTranslation, startOver } from '../../../data/actions/add';
 import {default as DumbAddPageForm} from '../../pages/AddPageForm'
 
 const mapStateToProps = (state) => {
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     changeTranslation: (translation) => {
       dispatch(changeTranslation(translation))
+    },
+    startOver: () => {
+      dispatch(startOver())
     }
   }
 }

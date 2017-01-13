@@ -29,6 +29,8 @@ const add = (state = initialState, action) => {
         ...state,
         imageUrls: action.imageUrls
       }
+    case 'START_OVER':
+      return initialState
     default:
       return state
   }

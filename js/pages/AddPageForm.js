@@ -13,6 +13,7 @@ export default class AddPageForm extends React.Component {
     translation: React.PropTypes.string,
     changeWord: React.PropTypes.func,
     changeTranslation: React.PropTypes.func,
+    startOver: React.PropTypes.func,
   }
   render() {
     let imageBlock = null;
@@ -40,7 +41,7 @@ export default class AddPageForm extends React.Component {
                   translation: this.props.translation
                 });
             }}/>
-          <Button text="Start Over" width={110} height={35} />
+          <Button text="Start Over" width={110} height={35} onPress={this.props.startOver}/>
         </View>
       </View>
     )
