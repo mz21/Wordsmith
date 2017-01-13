@@ -8,12 +8,13 @@ export default class CustomTextInput extends React.Component {
     placeholder: React.PropTypes.string,
     width: React.PropTypes.number,
     height: React.PropTypes.number,
-    onChangeText: React.PropTypes.string
+    onChangeText: React.PropTypes.string,
+    defaultValue: React.PropTypes.string
   };
   render() {
     return (
       <View style={[styles.textInput, {width: this.props.width, height: this.props.height}]}>
-        <TextInput autoCapitalize='none' autoCorrect={false} placeholder={this.props.placeholder}
+        <TextInput defaultValue={this.props.defaultValue} autoCapitalize='none' autoCorrect={false} placeholder={this.props.placeholder}
         onChangeText={(text) => {this.props.onChangeText(text)}}
         style={[styles.text, {width: this.props.width, height: this.props.height}]} />
       </View>

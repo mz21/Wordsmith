@@ -39,7 +39,10 @@ class SearchBar extends React.Component {
             this.props.onFocus();
           }}
           onSubmitEditing={() => {
-            this.props.onSubmit();
+            this.props.onSubmit(this.state.text);
+          }}
+          onChangeText={(text) => {
+            this.setState({text})
           }}
           style={[styles.searchBar, {paddingLeft: width * this.state.searchBarOffset, width: width * this.state.searchBarWidth}]} />
         <Icon name="search" size={12} color='rgb(154,154,154)' style={[styles.searchIcon, {left: width * (this.state.searchBarOffset + 0.03)}]} />

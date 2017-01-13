@@ -1,14 +1,15 @@
 var React = require('React');
 import {StyleSheet, View, Text, Dimensions} from 'react-native';
 import SearchBar from '../SearchBar';
-import AddPageForm from './AddPageForm';
-import AddPageImagePicker from './AddPageImagePicker';
+import AddPageForm from '../containers/pages/AddPageForm';
+import AddPageImagePicker from '../containers/pages/AddPageImagePicker';
 import * as commons from '../../data/commons';
 
 var {width, height} = Dimensions.get('window');
 class AddPage extends React.Component {
   props: {
-    addWord: React.PropTypes.func
+    addWord: React.PropTypes.func,
+    fetchImages: React.PropTypes.func
   }
   state = {
     tab: commons.ADD_FORM
@@ -37,6 +38,7 @@ class AddPage extends React.Component {
   }
   onSubmit = (text) => {
     this.setState({tab: commons.ADD_PICKER})
+    this.props.fetchImages(text);
   }
   onCancel = () => {
     this.setState({tab: commons.ADD_FORM})

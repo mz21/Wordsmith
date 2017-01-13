@@ -1,30 +1,45 @@
 var React = require('React');
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, Text, Image, Dimensions} from 'react-native';
 import CustomTextInput from '../CustomTextInput';
 import Button from '../Button';
 
 var {width, height} = Dimensions.get('window');
 export default class AddPageForm extends React.Component {
   props: {
-    addWord: React.PropTypes.func
-  }
-  state = {
-    imagePath: '',
-    translation: '',
-    word: ''
+    addWord: React.PropTypes.func,
+    thumbnailUrl: React.PropTypes.string,
+    fullUrl: React.PropTypes.string,
+    word: React.PropTypes.string,
+    translation: React.PropTypes.string,
+    changeWord: React.PropTypes.func,
+    changeTranslation: React.PropTypes.func,
   }
   render() {
+    let imageBlock = null;
+    if(this.props.fullUrl) {
+      imageBlock = <Image source={{uri: this.props.fullUrl}}
+        style={styles.image} />
+    }
+    else {
+      imageBlock = <View style={[styles.image, styles.blankImage]}>
+                    <Text style={styles.imageText}>
+                      Images help you remember things
+                    </Text>
+                  </View>
+    }
     return (
       <View style={styles.formContainer}>
-        <View style={styles.image}>
-          <Text style={styles.imageText}>
-            Images help you remember things
-          </Text>
-        </View>
-        <CustomTextInput placeholder='Enter the word (e.g. Bonjour)' width={width*0.7} height={35} onChangeText={this.onChangeWord}/>
-        <CustomTextInput placeholder='Enter the translation (e.g. Hello)' width={width*0.7} height={35} onChangeText={this.onChangeTranslation}/>
+        {imageBlock}
+        <CustomTextInput defaultValue={this.props.word} placeholder='Enter the word (e.g. Bonjour)' width={width*0.7} height={35} onChangeText={this.onChangeWord}/>
+        <CustomTextInput defaultValue={this.props.translation} placeholder='Enter the translation (e.g. Hello)' width={width*0.7} height={35} onChangeText={this.onChangeTranslation}/>
         <View style={styles.buttonSection}>
-          <Button text="Add this Word" width={110} height={35} onPress={() => { this.props.addWord(this.state);}}/>
+          <Button text="Add this Word" width={110} height={35} onPress={() =>
+              {
+                this.props.addWord({
+                  word: this.props.word,
+                  translation: this.props.translation
+                });
+            }}/>
           <Button text="Start Over" width={110} height={35} />
         </View>
       </View>
@@ -32,10 +47,10 @@ export default class AddPageForm extends React.Component {
   }
   //when you reviewed and success or failure
   onChangeTranslation = (text) => {
-    this.setState({translation: text});
+    this.props.changeTranslation(text);
   }
   onChangeWord = (text) => {
-    this.setState({word: text});
+    this.props.changeWord(text);
   }
 }
 
@@ -48,9 +63,11 @@ var styles = StyleSheet.create({
   image: {
     width: width * 0.6,
     height: width * 0.6,
-    backgroundColor: 'rgb(252,252,252)',
     borderColor: 'rgb(208,208,208)',
     borderWidth: 1,
+  },
+  blankImage: {
+    backgroundColor: 'rgb(252,252,252)',
     alignItems: 'center',
     justifyContent: 'center'
   },
