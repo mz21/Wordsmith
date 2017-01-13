@@ -1,4 +1,5 @@
 var React = require('React');
+var removeDiacritics = require('diacritics').remove;
 import {View, ListView, StyleSheet} from 'react-native';
 import WordItem from '../WordItem';
 import FilterTabs from '../containers/FilterTabs';
@@ -29,8 +30,8 @@ class WordsPage extends React.Component {
   }
   filterWords = (words) => {
     return words.filter((word) => {
-      let text = word.word;
-      return text.toLowerCase().startsWith(this.state.searchText)
+      let text = removeDiacritics(word.word);
+      return text.toLowerCase().startsWith(removeDiacritics(this.state.searchText))
     })
   }
   searchOnChangeText = (text) => {
