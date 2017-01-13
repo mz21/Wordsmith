@@ -15,15 +15,18 @@ class WordsPage extends React.Component {
   render() {
     let words = this.filterWords(this.props.words);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let wordsList = null;
+    if(words.length) {
+      wordsList = <ListView
+        dataSource={ds.cloneWithRows(words)}
+        renderRow={(rowData) => <WordItem word={rowData.word} reviews={rowData.reviews} daysUntil={rowData.nextReviewTime}/>} />
+    }
     return (
       <View style={styles.container}>
         <SearchBar onChangeText={this.searchOnChangeText} placeholder="Find Word"/>
         <FilterTabs />
         <View style={styles.wordItems}>
-          <ListView
-            enableEmptySections={false}
-            dataSource={ds.cloneWithRows(words)}
-            renderRow={(rowData) => <WordItem word={rowData.word} reviews={rowData.reviews} daysUntil={rowData.nextReviewTime}/>} />
+          {wordsList}
         </View>
       </View>
     );
