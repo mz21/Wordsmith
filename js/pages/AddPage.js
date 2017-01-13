@@ -20,11 +20,11 @@ class AddPage extends React.Component {
       addComponent = <AddPageForm addWord={this.props.addWord}/>
     }
     else if(this.state.tab === commons.ADD_PICKER) {
-      addComponent = <AddPageImagePicker/>
+      addComponent = <AddPageImagePicker onSubmit={this.navToForm}/>
     }
     return (
       <View style={styles.wrapper}>
-        <SearchBar onFocus={this.onFocus} onCancel={this.onCancel} onSubmit={this.onSubmit} placeholder="Find Image via Google"/>
+        <SearchBar onFocus={this.onFocus} onCancel={this.onCancel} onSubmit={this.onSubmit} placeholder="Find Image via Bing"/>
         <View style={styles.container}>
           {addComponent}
         </View>
@@ -41,6 +41,9 @@ class AddPage extends React.Component {
     this.props.fetchImages(text);
   }
   onCancel = () => {
+    this.setState({tab: commons.ADD_FORM})
+  }
+  navToForm = () => {
     this.setState({tab: commons.ADD_FORM})
   }
 }

@@ -6,7 +6,8 @@ var {width, height} = Dimensions.get('window');
 export default class AddPage extends React.Component {
   props: {
     imageUrls: React.PropTypes.array, // of form [{thumbnail: url, full: url}, ..]
-    setImage: React.PropTypes.func
+    setImage: React.PropTypes.func,
+    onSubmit: React.PropTypes.func
   }
   state = {
     selectedThumbnail: null,
@@ -42,10 +43,8 @@ export default class AddPage extends React.Component {
     )
   }
   onPress = () => {
-    console.log('hijk')
-    console.log(this.state.selectedFull);
-    console.log(this.state.selectedThumbnail);
     this.props.setImage({full: this.state.selectedFull, thumbnail: this.state.selectedThumbnail})
+    this.props.onSubmit();
   }
 }
 
