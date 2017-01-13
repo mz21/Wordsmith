@@ -42,6 +42,7 @@ export default class AddPageForm extends React.Component {
                   thumbnailUrl: this.props.thumbnailUrl,
                   fullUrl: this.props.fullUrl,
                 });
+                this.props.startOver();
             }}/>
           <Button text="Start Over" width={110} height={35} onPress={this.props.startOver}/>
         </View>

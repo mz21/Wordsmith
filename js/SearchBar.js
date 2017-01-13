@@ -10,6 +10,7 @@ class SearchBar extends React.Component {
     autoCorrect: React.PropTypes.bool,
     onFocus: React.PropTypes.func,
     onCancel: React.PropTypes.func,
+    onChangeText: React.PropTypes.func,
     onSubmit: React.PropTypes.func
   };
   state = {
@@ -25,8 +26,8 @@ class SearchBar extends React.Component {
       cancelButton = (
         <TouchableHighlight underlayColor='pink' onPress={() => {
             this.setInactiveSearchBar();
-            if(this.props.onCancel()) {
-              this.props.onCancel();              
+            if(this.props.onCancel) {
+              this.props.onCancel();
             }
           }}>
           <Text style={styles.cancelActive}>Cancel</Text>
@@ -48,6 +49,9 @@ class SearchBar extends React.Component {
             }
           }}
           onChangeText={(text) => {
+            if(this.props.onChangeText) {
+              this.props.onChangeText(text);
+            }
             this.setState({text})
           }}
           style={[styles.searchBar, {paddingLeft: width * this.state.searchBarOffset, width: width * this.state.searchBarWidth}]} />
