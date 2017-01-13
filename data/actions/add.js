@@ -41,10 +41,17 @@ var fetchImagesRequest = (search) => {
   }
 }
 
+var startOver = () => {
+  return {
+    type: 'START_OVER'
+  }
+}
+
 module.exports = {
   changeWord,
   changeTranslation,
   setImage,
   fetchImages,
-  fetchImagesRequest
+  fetchImagesRequest,
+  startOver
 }
