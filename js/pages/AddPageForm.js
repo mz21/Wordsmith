@@ -2,6 +2,7 @@ var React = require('React');
 import {StyleSheet, View, Text, Image, Dimensions} from 'react-native';
 import CustomTextInput from '../CustomTextInput';
 import Button from '../Button';
+import * as commons from '../../data/commons'
 
 var {width, height} = Dimensions.get('window');
 export default class AddPageForm extends React.Component {
@@ -14,6 +15,9 @@ export default class AddPageForm extends React.Component {
     changeWord: React.PropTypes.func,
     changeTranslation: React.PropTypes.func,
     startOver: React.PropTypes.func,
+  }
+  state = {
+    text: this.props.word ? this.props.word : ''
   }
   render() {
     let imageBlock = null;
@@ -28,13 +32,21 @@ export default class AddPageForm extends React.Component {
                     </Text>
                   </View>
     }
+
+    let buttonDisabled = null;
+    if(this.state.text.length > 0) {
+      buttonDisabled = false
+    }
+    else {
+      buttonDisabled = true
+    }
     return (
       <View style={styles.formContainer}>
         {imageBlock}
         <CustomTextInput defaultValue={this.props.word} placeholder='Enter the word (e.g. Bonjour)' width={width*0.7} height={35} onChangeText={this.onChangeWord}/>
         <CustomTextInput defaultValue={this.props.translation} placeholder='Enter the translation (e.g. Hello)' width={width*0.7} height={35} onChangeText={this.onChangeTranslation}/>
         <View style={styles.buttonSection}>
-          <Button text="Add this Word" width={110} height={35} onPress={() =>
+          <Button disabled={buttonDisabled} text="Add this Word" backgroundColor={buttonDisabled ? commons.DISABLED_GRAY : commons.MED_PURPLE} textColor='rgb(251,251,251)' width={110} height={35} onPress={() =>
               {
                 this.props.addWord({
                   word: this.props.word,
@@ -55,6 +67,7 @@ export default class AddPageForm extends React.Component {
   }
   onChangeWord = (text) => {
     this.props.changeWord(text);
+    this.setState({text});
   }
 }
 
