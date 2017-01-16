@@ -5,7 +5,7 @@ import Button from '../Button';
 import * as commons from '../../data/commons'
 
 var {width, height} = Dimensions.get('window');
-export default class AddPageForm extends React.Component {
+export default class EditPageForm extends React.Component {
   props: {
     addWord: React.PropTypes.func,
     thumbnailUrl: React.PropTypes.string,
