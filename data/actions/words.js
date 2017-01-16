@@ -27,6 +27,15 @@ var editWordReviewTime = (data) => ({
   id: data.id
 })
 
+var editWord = (data) => {
+  type: 'EDIT_WORD'
+}
+
+var deleteWord = (id) => {
+  type: 'DELETE_WORD',
+  id
+}
+
 var addWordRequest = (data) => {
   var {thumbnailUrl, fullUrl, translation, word} = data;
   var createTime = Date.now();
@@ -48,6 +57,15 @@ var addWordRequest = (data) => {
     dispatch(addWord({...values, nextReviewTime: commons.daysUntil(nextReviewTime), reviews: []}));
     dispatch(orderWords(null));
   }
+}
+
+var editWordRequest = (data) => {
+  //firebase call
+  dispatch(editWord(data));
+}
+var deleteWordRequest = (id) => {
+  //firebase call
+  dispatch(deleteWord(id))
 }
 
 var setWordListRequest = () => {
@@ -86,5 +104,7 @@ module.exports = {
   setWordListRequest,
   orderWords,
   setOrder,
-  editWordReviewTime
+  editWordReviewTime,
+  editWordRequest,
+  deleteWordRequest
 };

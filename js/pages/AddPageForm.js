@@ -1,5 +1,5 @@
 var React = require('React');
-import {StyleSheet, View, Text, Image, Dimensions, Alert} from 'react-native';
+import {StyleSheet, View, Text, Image, Dimensions} from 'react-native';
 import CustomTextInput from '../CustomTextInput';
 import Button from '../Button';
 import * as commons from '../../data/commons'
@@ -12,7 +12,6 @@ export default class AddPageForm extends React.Component {
     fullUrl: React.PropTypes.string,
     word: React.PropTypes.string,
     translation: React.PropTypes.string,
-    editMode: React.PropTypes.bool,
     changeWord: React.PropTypes.func,
     changeTranslation: React.PropTypes.func,
     startOver: React.PropTypes.func,
@@ -41,45 +40,24 @@ export default class AddPageForm extends React.Component {
     else {
       buttonDisabled = true
     }
-
-    let buttonSection = null;
-    if(true || this.props.editMode) {
-      buttonSection =
-      <View style={styles.buttonSection}>
-        <Button text="Save this Word" backgroundColor={commons.MED_PURPLE} textColor='rgb(251,251,251)' width={110} height={35} onPress={() =>
-            {
-              this.props.addWord({
-                word: this.props.word,
-                translation: this.props.translation,
-                thumbnailUrl: this.props.thumbnailUrl,
-                fullUrl: this.props.fullUrl,
-              });
-          }}/>
-        <Button text="Delete" width={110} height={35} backgroundColor={commons.RED} textColor='rgb(251,251,251)' onPress={this.onDeleteWord}/>
-      </View>
-    }
-    else {
-      buttonSection =
-      <View style={styles.buttonSection}>
-        <Button disabled={buttonDisabled} text="Add this Word" backgroundColor={buttonDisabled ? commons.DISABLED_GRAY : commons.MED_PURPLE} textColor='rgb(251,251,251)' width={110} height={35} onPress={() =>
-            {
-              this.props.addWord({
-                word: this.props.word,
-                translation: this.props.translation,
-                thumbnailUrl: this.props.thumbnailUrl,
-                fullUrl: this.props.fullUrl,
-              });
-              this.props.startOver();
-          }}/>
-        <Button text="Start Over" width={110} height={35} backgroundColor='rgb(252,252,252)' onPress={this.props.startOver}/>
-      </View>
-    }
     return (
       <View style={styles.formContainer}>
         {imageBlock}
         <CustomTextInput defaultValue={this.props.word} placeholder='Enter the word (e.g. Bonjour)' width={width*0.7} height={35} onChangeText={this.onChangeWord}/>
         <CustomTextInput defaultValue={this.props.translation} placeholder='Enter the translation (e.g. Hello)' width={width*0.7} height={35} onChangeText={this.onChangeTranslation}/>
-        {buttonSection}
+        <View style={styles.buttonSection}>
+          <Button disabled={buttonDisabled} text="Add this Word" backgroundColor={buttonDisabled ? commons.DISABLED_GRAY : commons.MED_PURPLE} textColor='rgb(251,251,251)' width={110} height={35} onPress={() =>
+              {
+                this.props.addWord({
+                  word: this.props.word,
+                  translation: this.props.translation,
+                  thumbnailUrl: this.props.thumbnailUrl,
+                  fullUrl: this.props.fullUrl,
+                });
+                this.props.startOver();
+            }}/>
+          <Button text="Start Over" width={110} height={35} onPress={this.props.startOver}/>
+        </View>
       </View>
     )
   }
@@ -90,15 +68,6 @@ export default class AddPageForm extends React.Component {
   onChangeWord = (text) => {
     this.props.changeWord(text);
     this.setState({text});
-  }
-  onDeleteWord = () => {
-    Alert.alert(
-      'Alert Title',
-      'Are you sure you want to delete this word?',
-      [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
-        {text: 'OK', onPress: () => console.log('OK Pressed!')},
-      ])
   }
 }
 
