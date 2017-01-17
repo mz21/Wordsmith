@@ -6,14 +6,14 @@ import {default as DumbAddPageImagePicker} from '../../pages/AddPageImagePicker'
 const mapStateToProps = (state) => {
   return {
     imageUrls: state.add.imageUrls,
-    imageUrl: state.add.imageUrl
+    editImageUrls: state.add.editImageUrls
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setImage: (imageUrl) => {
-      dispatch(setImage(imageUrl));
+    setImage: (imageUrl, editMode) => {
+      dispatch(setImage(imageUrl, editMode));
     }
   }
 }

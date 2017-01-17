@@ -31,10 +31,10 @@ var editWord = (data) => {
   type: 'EDIT_WORD'
 }
 
-var deleteWord = (id) => {
+var deleteWord = (id) => ({
   type: 'DELETE_WORD',
   id
-}
+})
 
 var addWordRequest = (data) => {
   var {thumbnailUrl, fullUrl, translation, word} = data;
@@ -63,9 +63,27 @@ var editWordRequest = (data) => {
   //firebase call
   dispatch(editWord(data));
 }
+
+var deleteTodo = (id) => {
+  return {
+    type: 'DELETE_TODO',
+    id
+  }
+}
+
+var deleteTodoRequest = (id) => {
+  return (dispatch) => {
+    database.ref('/users/' + 'test/todos/' + id).remove();
+    dispatch(deleteTodo(id));
+  }
+}
+
 var deleteWordRequest = (id) => {
-  //firebase call
-  dispatch(deleteWord(id))
+  return (dispatch) => {
+    dispatch(deleteTodoRequest(id))
+    database.ref('/users/' + 'test/words/' + id).remove();
+    dispatch(deleteWord(id))
+  }
 }
 
 var setWordListRequest = () => {

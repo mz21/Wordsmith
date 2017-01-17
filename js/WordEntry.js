@@ -1,25 +1,23 @@
 var React = require('React');
-var StyleSheet = require('StyleSheet');
-var View = require('View');
-var Text = require('Text');
-var Image = require('Image');
-var Dimensions = require('Dimensions');
+import {StyleSheet, View, Text, Image, Dimensions, TouchableOpacity} from 'react-native'
 
 var {width} = Dimensions.get('window');
 class WordEntry extends React.Component {
   props: {
     word: React.PropTypes.string,
     image: React.PropTypes.string,
-    textColor: React.PropTypes.string
+    textColor: React.PropTypes.string,
+    onPress: React.PropTypes.func,
+    id: React.PropTypes.string
   };
   render() {
     return (
-      <View style={styles.wordEntry}>
+      <TouchableOpacity onPress={() => {this.props.onPress(this.props.id)}} style={styles.wordEntry}>
         <Text style={[styles.text, {color: this.props.textColor}]}>
           {this.props.word}
         </Text>
         <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
-      </View>
+      </TouchableOpacity>
     );
   }
 }

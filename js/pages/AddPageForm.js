@@ -1,5 +1,5 @@
 var React = require('React');
-import {StyleSheet, View, ScrollView, Text, Image, Dimensions} from 'react-native';
+import {StyleSheet, View, ScrollView, Text, Image, Dimensions, Keyboard} from 'react-native';
 import WordForm from '../WordForm';
 import Button from '../Button';
 import * as commons from '../../data/commons'
@@ -17,7 +17,19 @@ export default class AddPageForm extends React.Component {
     startOver: React.PropTypes.func,
   }
   state = {
-    text: this.props.word ? this.props.word : ''
+    keyboardOffset: 0
+  }
+  componentDidMount() {
+    this.keyboardShowListener = Keyboard.addListener('keyboardWillShow', (e) => {
+      this.setState({keyboardOffset: e.endCoordinates.height - 2});
+    })
+    this.keyboardHideListener = Keyboard.addListener('keyboardWillHide', (e) => {
+      this.setState({keyboardOffset: 0});
+    })
+  }
+  componentWillUnmount() {
+    this.keyboardShowListener.remove();
+    this.keyboardHideListener.remove();
   }
   render() {
     let buttonDisabled = null;
@@ -28,29 +40,34 @@ export default class AddPageForm extends React.Component {
       buttonDisabled = true
     }
     return (
-      <ScrollView contentContainerStyle={styles.formContainer}>
-        <WordForm {...this.props}/>
-        <View style={styles.buttonSection}>
-          <Button disabled={buttonDisabled} text="Add this Word" backgroundColor={buttonDisabled ? commons.DISABLED_GRAY : commons.MED_PURPLE} textColor='rgb(251,251,251)' width={110} height={35} onPress={() =>
-              {
-                this.props.addWord({
-                  word: this.props.word,
-                  translation: this.props.translation,
-                  thumbnailUrl: this.props.thumbnailUrl,
-                  fullUrl: this.props.fullUrl,
-                });
-                this.props.startOver();
-            }}/>
-          <Button text="Start Over" width={110} height={35} onPress={this.props.startOver}/>
-        </View>
-      </ScrollView>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.formContainer} contentOffset={{y: this.state.keyboardOffset}}>
+          <WordForm {...this.props}/>
+          <View style={styles.buttonSection}>
+            <Button disabled={buttonDisabled} text="Add this Word" backgroundColor={buttonDisabled ? commons.DISABLED_GRAY : commons.MED_PURPLE} textColor='rgb(251,251,251)' width={110} height={35} onPress={() =>
+                {
+                  this.props.addWord({
+                    word: this.props.word,
+                    translation: this.props.translation,
+                    thumbnailUrl: this.props.thumbnailUrl,
+                    fullUrl: this.props.fullUrl,
+                  });
+                  this.props.startOver();
+              }}/>
+            <Button text="Start Over" width={110} height={35} onPress={this.props.startOver}/>
+          </View>
+        </ScrollView>
+      </View>
     )
   }
 }
 
 var styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   formContainer: {
-    flex: 1,
+    height: height * 0.73,
     alignItems: 'center',
     justifyContent: 'space-around'
   },

@@ -6,8 +6,10 @@ var {width, height} = Dimensions.get('window');
 export default class AddPage extends React.Component {
   props: {
     imageUrls: React.PropTypes.array, // of form [{thumbnail: url, full: url}, ..]
+    editImageUrls: React.PropTypes.array,
     setImage: React.PropTypes.func,
-    onSubmit: React.PropTypes.func
+    onSubmit: React.PropTypes.func,
+    editMode: React.PropTypes.bool
   }
   state = {
     selectedThumbnail: null,
@@ -15,8 +17,15 @@ export default class AddPage extends React.Component {
   }
   render() {
     let imageUrls = [];
-    if(this.props.imageUrls) {
-      imageUrls = this.props.imageUrls;
+    if(this.props.editMode) {
+      if(this.props.editImageUrls) {
+        imageUrls = this.props.editImageUrls;
+      }
+    }
+    else {
+      if(this.props.imageUrls) {
+        imageUrls = this.props.imageUrls;
+      }
     }
     var images = imageUrls.map((urls) => {
       let {thumbnail, full} = urls
@@ -43,7 +52,7 @@ export default class AddPage extends React.Component {
     )
   }
   onPress = () => {
-    this.props.setImage({full: this.state.selectedFull, thumbnail: this.state.selectedThumbnail})
+    this.props.setImage({full: this.state.selectedFull, thumbnail: this.state.selectedThumbnail}, this.props.editMode)
     this.props.onSubmit();
   }
 }

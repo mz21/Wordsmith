@@ -1,7 +1,8 @@
 var React = require('React');
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, Text, Dimensions, ScrollView} from 'react-native';
 import SearchBar from '../SearchBar';
 import AddPageForm from '../containers/pages/AddPageForm';
+import EditPageForm from '../containers/pages/EditPageForm';
 import AddPageImagePicker from '../containers/pages/AddPageImagePicker';
 import * as commons from '../../data/commons';
 
@@ -9,7 +10,9 @@ var {width, height} = Dimensions.get('window');
 class AddPage extends React.Component {
   props: {
     addWord: React.PropTypes.func,
-    fetchImages: React.PropTypes.func
+    fetchImages: React.PropTypes.func,
+    goBack: React.PropTypes.func,
+    editMode: React.PropTypes.bool
   }
   state = {
     tab: commons.ADD_FORM
@@ -17,18 +20,24 @@ class AddPage extends React.Component {
   render() {
     var addComponent = null;
     if(this.state.tab === commons.ADD_FORM) {
-      addComponent = <AddPageForm addWord={this.props.addWord}/>
+      if(this.props.editMode) {
+        addComponent = <EditPageForm goBack={this.props.goBack}/>
+      }
+      else {
+        addComponent = <AddPageForm/>
+      }
     }
     else if(this.state.tab === commons.ADD_PICKER) {
-      addComponent = <AddPageImagePicker onSubmit={this.navToForm}/>
+      addComponent = <AddPageImagePicker editMode={this.props.editMode} onSubmit={this.navToForm}/>
     }
+    // else addComponent is null
     return (
-      <View style={styles.wrapper}>
+      <ScrollView contentContainerStyle={styles.wrapper}>
         <SearchBar onFocus={this.onFocus} onCancel={this.onCancel} onSubmit={this.onSubmit} placeholder="Find Image via Bing"/>
         <View style={styles.container}>
           {addComponent}
         </View>
-      </View>
+      </ScrollView>
     );
   }
   onFocus = () => {
@@ -38,7 +47,7 @@ class AddPage extends React.Component {
   }
   onSubmit = (text) => {
     this.setState({tab: commons.ADD_PICKER})
-    this.props.fetchImages(text);
+    this.props.fetchImages(text, this.props.editMode);
   }
   onCancel = () => {
     this.setState({tab: commons.ADD_FORM})

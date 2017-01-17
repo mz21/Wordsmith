@@ -21,6 +21,13 @@ const todos = (state = todosInitialState, action) => {
           return todo;
         })
       }
+    case 'DELETE_TODO':
+      return {
+        ...state,
+        todos: state.todos.filter(todo => {
+          return todo.id !== action.id
+        })
+      }
     case 'SET_UPDATED_TIME':
     return {
       ...state,

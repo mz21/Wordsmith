@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { switchTab } from '../../../data/actions'
+import { switchTab, setEditWord } from '../../../data/actions'
 import {default as DumbTodoPage} from '../../pages/TodoPage'
 import * as tabs from '../../../data/commons'
 
@@ -22,7 +22,8 @@ const mapStateToProps = (state) => {
     completedTodos: completed,
     completed: completedTotal,
     total: todosTotal,
-    isLoading: state.todos.isLoading
+    isLoading: state.todos.isLoading,
+    words: state.words.words
   }
 }
 
@@ -31,6 +32,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onTab: () => {
       dispatch(switchTab(tabs.TODOQUIZ))
+    },
+    editWord: (words, id) => {
+      dispatch(setEditWord(words, id))
     }
   }
 }

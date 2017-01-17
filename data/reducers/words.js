@@ -43,24 +43,21 @@ const words = (state = initialState, action) => {
       }
     case 'EDIT_WORD_REVIEW_TIME':
       return {...state, words: state.words.map(word => {
-          if(word.id === action.id) {
-            word.nextReviewTime = commons.daysUntil(action.nextReviewTime);
-          }
-          return word;
-        })}
+        if(word.id === action.id) {
+          word.nextReviewTime = commons.daysUntil(action.nextReviewTime);
+        }
+        return word;
+      })}
     case 'EDIT_WORD':
-    return {...state, words: state.words.map(word => {
+      return {...state, words: state.words.map(word => {
         if(word.id === action.id) {
           word.nextReviewTime = commons.daysUntil(action.nextReviewTime);
         }
         return word;
       })}
     case 'DELETE_WORD':
-    return {...state, words: state.words.map(word => {
-        if(word.id === action.id) {
-          return null // check this syntax
-        }
-        return word;
+      return {...state, words: state.words.filter((word) => {
+        return word.id != action.id
       })}
     default:
       return state;

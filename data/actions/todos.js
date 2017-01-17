@@ -9,7 +9,6 @@ var completeTodo = (id) => {
   }
 }
 
-
 var completeTodoRequest = (data) => {
   var {id, success} = data;
   return (dispatch) => {

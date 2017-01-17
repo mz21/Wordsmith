@@ -9,19 +9,27 @@ var Dimensions = require('Dimensions');
 import ProgressCircle from 'react-native-progress/Circle';
 import Button from '../Button';
 import WordEntry from '../WordEntry';
+import AddPage from '../containers/pages/AddPage'
 
 var {width} = Dimensions.get('window');
 class TodoPage extends React.Component {
   props: {
     onTab: React.PropTypes.func,
-    isLoading: React.PropTypes.bool
+    editWord: React.PropTypes.func,
+    isLoading: React.PropTypes.bool,
+    words: React.PropTypes.array,
+    uncompletedTodos: React.PropTypes.array,
+    completedTodos: React.PropTypes.array,
+  }
+  state = {
+    isEditing: false
   }
   render() {
     const uncompletedWords = this.props.uncompletedTodos.map((todo) =>
-      <WordEntry word={todo.word} key={todo.id} textColor={'rgb(60,60,60)'}/>
+      <WordEntry word={todo.word} key={todo.id} id={todo.id} textColor={'rgb(60,60,60)'} onPress={this.onPress}/>
     );
     const completedWords = this.props.completedTodos.map((todo) =>
-      <WordEntry word={todo.word} key={todo.id} textColor={'rgb(60,179,113)'}/>
+      <WordEntry word={todo.word} key={todo.id} id={todo.id} textColor={'rgb(60,179,113)'} onPress={this.onPress}/>
     );
     if(this.props.isLoading) {
       return (
@@ -33,18 +41,30 @@ class TodoPage extends React.Component {
       )
     }
 
-    return (
-      <View style={styles.todoLayout}>
-        <View style={styles.progressSection}>
-          <ProgressCircle size={80} showsText formatText={() => this.props.completed + '/' + this.props.total} progress={this.props.completed / this.props.total} color={'rgba(197,111,255, 1)'} thickness={5} unfilledColor={'rgba(197,111,255, 0.35)'} borderWidth={0} textStyle={styles.progressCircleText} indeterminate={false} />
-          <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
+    var component = null;
+    if(this.state.isEditing) {
+      return (
+        <AddPage editMode={true} goBack={() => {this.setState({isEditing: false})}}/>
+      )
+    }
+    else {
+      return (
+        <View style={styles.todoLayout}>
+          <View style={styles.progressSection}>
+            <ProgressCircle size={80} showsText formatText={() => this.props.completed + '/' + this.props.total} progress={this.props.completed / this.props.total} color={'rgba(197,111,255, 1)'} thickness={5} unfilledColor={'rgba(197,111,255, 0.35)'} borderWidth={0} textStyle={styles.progressCircleText} indeterminate={false} />
+            <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
+          </View>
+          <ScrollView contentContainerStyle={styles.wordEntries}>
+            {uncompletedWords}
+            {completedWords}
+          </ScrollView>
         </View>
-        <ScrollView contentContainerStyle={styles.wordEntries}>
-          {uncompletedWords}
-          {completedWords}
-        </ScrollView>
-      </View>
-    );
+      );
+    }
+  }
+  onPress = (id) => {
+    this.props.editWord(this.props.words, id)
+    this.setState({isEditing: true})
   }
 }
 

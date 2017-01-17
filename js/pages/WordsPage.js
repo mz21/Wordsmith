@@ -23,7 +23,7 @@ class WordsPage extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <SearchBar onChangeText={this.searchOnChangeText} placeholder="Find Word"/>
+        <SearchBar onChangeText={this.searchOnChangeText} onCancel={this.searchOnCancel} placeholder="Find Word"/>
         <FilterTabs />
         <View style={styles.wordItems}>
           {wordsList}
