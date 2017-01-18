@@ -4,13 +4,17 @@ import {View, ListView, StyleSheet} from 'react-native';
 import WordItem from '../WordItem';
 import FilterTabs from '../containers/FilterTabs';
 import SearchBar from '../SearchBar';
+import AddPage from '../containers/pages/AddPage'
 
 class WordsPage extends React.Component {
   props: {
-    words: React.PropTypes.array
+    editWord: React.PropTypes.func,
+    words: React.PropTypes.array,
+    isEditing: React.PropTypes.bool
   }
   state = {
-    searchText: ''
+    searchText: '',
+    isEditing: false
   }
   render() {
     let words = this.filterWords(this.props.words);
@@ -19,8 +23,15 @@ class WordsPage extends React.Component {
     if(words.length) {
       wordsList = <ListView
         dataSource={ds.cloneWithRows(words)}
-        renderRow={(rowData) => <WordItem word={rowData.word} reviews={rowData.reviews} daysUntil={rowData.nextReviewTime}/>} />
+        renderRow={(rowData) => <WordItem id={rowData.id} key={rowData.id} word={rowData.word} reviews={rowData.reviews} daysUntil={rowData.nextReviewTime} onPress={this.onPress}/>} />
     }
+
+    if(this.state.isEditing) {
+      return (
+        <AddPage editMode={true} goBack={() => {this.setState({isEditing: false})}}/>
+      )
+    }
+
     return (
       <View style={styles.container}>
         <SearchBar onChangeText={this.searchOnChangeText} onCancel={this.searchOnCancel} placeholder="Find Word"/>
@@ -30,6 +41,10 @@ class WordsPage extends React.Component {
         </View>
       </View>
     );
+  }
+  onPress = (id) => {
+    this.props.editWord(this.props.words, id)
+    this.setState({isEditing: true})
   }
   filterWords = (words) => {
     return words.filter((word) => {

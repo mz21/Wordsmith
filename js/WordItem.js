@@ -1,9 +1,5 @@
 var React = require('React');
-var StyleSheet = require('StyleSheet');
-var View = require('View');
-var Text = require('Text');
-var Image = require('Image');
-var Dimensions = require('Dimensions');
+import {StyleSheet, View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
 import * as commons from '../data/commons'
 
 var {width} = Dimensions.get('window');
@@ -12,7 +8,9 @@ class WordItem extends React.Component {
     word: React.PropTypes.string,
     nextReviewTime: React.PropTypes.number,
     daysUntil: React.PropTypes.number,
-    reviews: React.PropTypes.array
+    reviews: React.PropTypes.array,
+    onPress: React.PropTypes.func,
+    id: React.PropTypes.string
   }
   render() {
     var daysUntil = commons.setDaysUntilText(this.props.daysUntil)
@@ -21,7 +19,9 @@ class WordItem extends React.Component {
       accuracy += '%'
     }
     return (
-      <View style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={() => {
+        this.props.onPress(this.props.id)
+      }}>
         <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
         <View style={styles.label}>
           <Text style={styles.textWord}>
@@ -31,7 +31,7 @@ class WordItem extends React.Component {
             {accuracy} |  Next: {daysUntil}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
