@@ -97,12 +97,12 @@ var editTodoRequest = (data) => {
   let {id, word, translation, thumbnailUrl, fullUrl} = data
   return (dispatch) => {
     if(id && id != '') {
+      let updatePath = '/users/' + 'test/todos/' + id + '/'
       let updates = {}
-      // WRONG FIELDS FOR TODO SECTION
-      // //updates['/users/' + 'test/todos/' + id] = {word,
-      //                                           translation,
-      //                                           thumbnailUrl,
-      //                                           fullUrl}
+      updates[updatePath + 'word'] = word
+      updates[updatePath + 'translation'] = translation
+      updates[updatePath + 'thumbnailUrl'] = thumbnailUrl
+      updates[updatePath + 'fullUrl'] = fullUrl
       database.ref().update(updates)
     }
     else {
@@ -114,7 +114,7 @@ var editTodoRequest = (data) => {
 
 var editWordRequest = (data) => {
   return (dispatch) => {
-    //dispatch(editTodoRequest(data))
+    dispatch(editTodoRequest(data))
     let {id, word, translation, thumbnailUrl, fullUrl} = data
     let updatePath = '/users/' + 'test/words/' + id + '/'
     let updates = {}

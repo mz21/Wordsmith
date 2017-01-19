@@ -24,6 +24,15 @@ const todos = (state = todosInitialState, action) => {
     case 'EDIT_TODO':
       return {
         ...state,
+        todos: state.todos.map(todo => {
+          if(todo.id === action.id) {
+            todo.word = action.word
+            todo.translation = action.translation
+            todo.fullUrl = action.fullUrl
+            todo.thumbnailUrl = action.thumbnailUrl
+          }
+          return todo
+        })
       }
     case 'DELETE_TODO':
       return {
