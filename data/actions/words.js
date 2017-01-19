@@ -28,13 +28,46 @@ var editWordReviewTime = (data) => ({
 })
 
 var editWord = (data) => {
-  type: 'EDIT_WORD'
+  let {id, word, translation, thumbnailUrl, fullUrl} = data
+  return {
+    type: 'EDIT_WORD',
+    id,
+    word,
+    translation,
+    thumbnailUrl,
+    fullUrl
+  }
 }
 
 var deleteWord = (id) => ({
   type: 'DELETE_WORD',
   id
 })
+
+var updateWordReviews = (id, reviews) => ({
+  type: 'UPDATE_WORD_REVIEWS',
+  id,
+  reviews
+})
+
+var deleteTodo = (id) => {
+  return {
+    type: 'DELETE_TODO',
+    id
+  }
+}
+
+var editTodo = (data) => {
+  let {id, word, translation, thumbnailUrl, fullUrl} = data;
+  return {
+    type: 'EDIT_TODO',
+    id,
+    word,
+    translation,
+    thumbnailUrl,
+    fullUrl
+  }
+}
 
 var addWordRequest = (data) => {
   var {thumbnailUrl, fullUrl, translation, word} = data;
@@ -44,6 +77,7 @@ var addWordRequest = (data) => {
   nextReviewTime = commons.convertToMidnight(nextReviewTime);
   return (dispatch) => {
     var firebaseRef = database.ref('/users/' + 'test/words').push();
+    var id = firebaseRef.key
     var values = {
       thumbnailUrl,
       fullUrl,
@@ -54,26 +88,55 @@ var addWordRequest = (data) => {
     };
     firebaseRef.set(values);
 
-    dispatch(addWord({...values, nextReviewTime: commons.daysUntil(nextReviewTime), reviews: []}));
+    dispatch(addWord({...values, id, nextReviewTime: commons.daysUntil(nextReviewTime), reviews: []}));
     dispatch(orderWords(null));
   }
 }
 
-var editWordRequest = (data) => {
-  //firebase call
-  dispatch(editWord(data));
+var editTodoRequest = (data) => {
+  let {id, word, translation, thumbnailUrl, fullUrl} = data
+  return (dispatch) => {
+    if(id && id != '') {
+      let updates = {}
+      // WRONG FIELDS FOR TODO SECTION
+      // //updates['/users/' + 'test/todos/' + id] = {word,
+      //                                           translation,
+      //                                           thumbnailUrl,
+      //                                           fullUrl}
+      database.ref().update(updates)
+    }
+    else {
+      console.log('invalid id ' + id)
+    }
+    dispatch(editTodo(data))
+  }
 }
 
-var deleteTodo = (id) => {
-  return {
-    type: 'DELETE_TODO',
-    id
+var editWordRequest = (data) => {
+  return (dispatch) => {
+    //dispatch(editTodoRequest(data))
+    let {id, word, translation, thumbnailUrl, fullUrl} = data
+    let updatePath = '/users/' + 'test/words/' + id + '/'
+    let updates = {}
+    updates[updatePath + 'word'] = word
+    updates[updatePath + 'translation'] = translation
+    updates[updatePath + 'thumbnailUrl'] = thumbnailUrl
+    updates[updatePath + 'fullUrl'] = fullUrl
+
+    database.ref().update(updates)
+    dispatch(editWord(data));
+    dispatch(orderWords(null));
   }
 }
 
 var deleteTodoRequest = (id) => {
   return (dispatch) => {
-    database.ref('/users/' + 'test/todos/' + id).remove();
+    if(id && id != '') {
+      database.ref('/users/' + 'test/todos/' + id).remove();
+    }
+    else {
+      console.log('invalid id ' + id)
+    }
     dispatch(deleteTodo(id));
   }
 }
@@ -81,7 +144,12 @@ var deleteTodoRequest = (id) => {
 var deleteWordRequest = (id) => {
   return (dispatch) => {
     dispatch(deleteTodoRequest(id))
-    database.ref('/users/' + 'test/words/' + id).remove();
+    if(id && id != '') {
+      database.ref('/users/' + 'test/words/' + id).remove();
+    }
+    else {
+      console.log('invalid id ' + id)
+    }
     dispatch(deleteWord(id))
   }
 }
@@ -90,25 +158,23 @@ var setWordListRequest = () => {
   return (dispatch) => {
     return database.ref('/users/' + 'test/words').once('value', (snapshot) => {
       var words = snapshot.val();
-      words = Object.keys(words).map((key) => {
-        var {nextReviewTime, reviews} = words[key];
-        if(reviews) {
-          reviews = Object.keys(reviews).map((key) => {
-            return reviews[key];
-          });
-        }
-        else {
-          reviews = [];
-        }
-        nextReviewTime = commons.daysUntil(nextReviewTime);
+      if(!words || words.length === 0) {
+        words = []
+      }
+      else {
+        words = Object.keys(words).map((key) => {
+          var {nextReviewTime, reviews} = words[key];
+          reviews = commons.getReviews(reviews)
+          nextReviewTime = commons.daysUntil(nextReviewTime);
 
-        return {
-          ...words[key],
-          nextReviewTime,
-          reviews,
-          id: key
-        }
-      });
+          return {
+            ...words[key],
+            nextReviewTime,
+            reviews,
+            id: key
+          }
+        });
+      }
       dispatch(setWordList(words));
       dispatch(orderWords(null));
     });
@@ -122,6 +188,7 @@ module.exports = {
   setWordListRequest,
   orderWords,
   setOrder,
+  updateWordReviews,
   editWordReviewTime,
   editWordRequest,
   deleteWordRequest

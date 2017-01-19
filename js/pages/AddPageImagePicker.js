@@ -27,6 +27,8 @@ export default class AddPage extends React.Component {
         imageUrls = this.props.imageUrls;
       }
     }
+    console.log(this.props)
+    console.log('prop')
     var images = imageUrls.map((urls) => {
       let {thumbnail, full} = urls
       return (

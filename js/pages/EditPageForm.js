@@ -8,7 +8,7 @@ var {width, height} = Dimensions.get('window');
 export default class EditPageForm extends React.Component {
   props: {
     goBack: React.PropTypes.func,
-    saveWord: React.PropTypes.func,
+    editWord: React.PropTypes.func,
     deleteWord: React.PropTypes.func,
     changeWord: React.PropTypes.func,
     changeTranslation: React.PropTypes.func,
@@ -40,7 +40,7 @@ export default class EditPageForm extends React.Component {
         <View style={styles.buttonSection}>
           <Button text="Save Word" backgroundColor={commons.MED_PURPLE} textColor='rgb(251,251,251)' width={110} height={35} onPress={() =>
               {
-                this.props.saveWord({
+                this.props.editWord({
                   word: this.props.word,
                   translation: this.props.translation,
                   thumbnailUrl: this.props.thumbnailUrl,

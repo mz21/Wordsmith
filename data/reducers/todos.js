@@ -21,6 +21,10 @@ const todos = (state = todosInitialState, action) => {
           return todo;
         })
       }
+    case 'EDIT_TODO':
+      return {
+        ...state,
+      }
     case 'DELETE_TODO':
       return {
         ...state,

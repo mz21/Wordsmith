@@ -1,3 +1,8 @@
+import {AsyncStorage} from 'react-native'
+import {auth} from './firebaseSetup'
+const USER_KEY = 'USER'
+var uuid = require('uuid')
+
 module.exports = {
   TODO: 'TODO',
   TODOQUIZ: 'TODOQUIZ',
@@ -48,6 +53,8 @@ module.exports = {
     return daysUntilText;
   },
   getReviewsAccuracy: (reviews) => {
+    console.log('reviewss')
+    console.log(reviews)
     if(!reviews || reviews.length === 0) {
       return 'New Word'
     }
@@ -58,5 +65,35 @@ module.exports = {
       }).length;
       return Math.round(100 * correct/total);
     }
+  },
+  getUser: () => {
+    return AsyncStorage.getItem(USER_KEY) // returns a promise
+  },
+  signInUser: (key) => {
+    auth.signInWithEmailAndPassword(key + '@gmail.com', key).then((d) => {
+      console.log(d)
+    })
+  },
+  createUser: () => {
+    var key = uuid.v4()
+    AsyncStorage.setItem(USER_KEY, key)
+    auth.createUserWithEmailAndPassword(key + '@gmail.com', key)
+    .then((d) => {
+      console.log(d)
+    })
+    .catch(function(error) {
+      console.warn(error)
+    })
+  },
+  getReviews: (reviews) => {
+    if(reviews) {
+      reviews = Object.keys(reviews).map((key) => {
+        return reviews[key];
+      });
+    }
+    else {
+      reviews = [];
+    }
+    return reviews
   }
 }

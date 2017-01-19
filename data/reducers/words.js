@@ -23,7 +23,7 @@ const words = (state = initialState, action) => {
           return {...state, words: [...state.words].sort((a, b) => {return a.nextReviewTime - b.nextReviewTime})}
         case commons.order.ACCURACY:
           return {...state, words: [...state.words].sort((a, b) =>
-            {let accuracyA = commons.getReviewsAccuracy(a.reviews);
+            { let accuracyA = commons.getReviewsAccuracy(a.reviews);
             let accuracyB = commons.getReviewsAccuracy(b.reviews);
             if(!Number.isInteger(accuracyA)) {
               return 1;
@@ -48,10 +48,20 @@ const words = (state = initialState, action) => {
         }
         return word;
       })}
+    case 'UPDATE_WORD_REVIEWS':
+      return {...state, words: state.words.map(word => {
+        if(word.id === action.id) {
+          word.reviews = action.reviews
+        }
+        return word
+      })}
     case 'EDIT_WORD':
       return {...state, words: state.words.map(word => {
         if(word.id === action.id) {
-          word.nextReviewTime = commons.daysUntil(action.nextReviewTime);
+          word.word = action.word
+          word.translation = action.translation
+          word.fullUrl = action.fullUrl
+          word.thumbnailUrl = action.thumbnailUrl
         }
         return word;
       })}

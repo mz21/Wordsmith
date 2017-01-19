@@ -1,6 +1,6 @@
 var React = require('React');
 import { connect } from 'react-redux'
-import { changeWord, changeTranslation, startOver, saveWordRequest, deleteWordRequest } from '../../../data/actions/';
+import { changeWord, changeTranslation, editWordRequest, deleteWordRequest } from '../../../data/actions/';
 import {default as DumbEditPageForm} from '../../pages/EditPageForm'
 
 const mapStateToProps = (state) => {
@@ -21,8 +21,8 @@ const mapDispatchToProps = (dispatch) => {
     changeTranslation: (translation) => {
       dispatch(changeTranslation(translation, true))
     },
-    saveWord: (data) => {
-      dispatch(saveWordRequest(data))
+    editWord: (data) => {
+      dispatch(editWordRequest(data))
     },
     deleteWord: (id) => {
       dispatch(deleteWordRequest(id))

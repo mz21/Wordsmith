@@ -41,7 +41,7 @@ const add = (state = initialState, action) => {
         return {
           ...state,
           editFullUrl: action.fullUrl,
-          editThumbnail: action.thumbnailUrl
+          editThumbnailUrl: action.thumbnailUrl
         }
       }
       return {

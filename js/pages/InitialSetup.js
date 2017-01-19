@@ -15,14 +15,24 @@ class InitialSetup extends React.Component {
     setWordList: React.PropTypes.func
   }
   componentWillMount() {
+    commons.getUser().then((key) => {
+      if(key) {
+        commons.signInUser(key)
+      }
+      else {
+        console.warn('key doesnt exist')
+        commons.createUser()
+      }
+    })
     this.props.setUpdatedTime().then(() => {
       let midnightToday = commons.convertToMidnight(new Date(Date.now()));
-      var updated = true;
+      var alreadyBeenUpdatedToday = true;
       if(this.props.timeOfLastUpdate < midnightToday) {
-        updated = false;
+        alreadyBeenUpdatedToday = false;
       }
-      this.props.setTodos(updated);
+      this.props.setTodos(alreadyBeenUpdatedToday);
     });
+
     this.props.setWordList();
   }
   render() {

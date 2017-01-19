@@ -5,8 +5,8 @@ import {default as DumbAddPage} from '../../pages/AddPage'
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchImages: (text) => {
-      dispatch(fetchImagesRequest(text))
+    fetchImages: (text, editMode) => {
+      dispatch(fetchImagesRequest(text, editMode))
     }
   }
 }

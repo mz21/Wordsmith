@@ -4,6 +4,7 @@ import {default as DumbInitialSetup} from '../../pages/InitialSetup'
 import {database} from '../../../data/firebaseSetup';
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     timeOfLastUpdate: state.todos.timeOfLastUpdate
   }

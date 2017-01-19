@@ -1,6 +1,6 @@
 import {database} from '../firebaseSetup';
 import * as commons from '../commons'
-import {editWordReviewTime, orderWords} from './words'
+import {editWordReviewTime, orderWords, updateWordReviews} from './words'
 
 var completeTodo = (id) => {
   return {
@@ -13,13 +13,19 @@ var completeTodoRequest = (data) => {
   var {id, success} = data;
   return (dispatch) => {
     database.ref('/users/' + 'test/todos/' + id).update({completed: true});
-    let reviewRef = database.ref('/users/' + '/test/words/' + id + '/reviews').push();
+    let reviewsRef = database.ref('/users/' + '/test/words/' + id + '/reviews')
+    let reviewRef = reviewsRef.push();
     reviewRef.set({reviewTime: Date.now(), success});
     var nextReviewTime = new Date(Date.now());
     nextReviewTime.setDate(nextReviewTime.getDate() + 1);
     nextReviewTime = commons.convertToMidnight(nextReviewTime);
     let wordRef = database.ref('/users/' + '/test/words/' + id).update({
       nextReviewTime
+    })
+    reviewsRef.once('value').then((snapshot) => {
+      let reviews = snapshot.val()
+      reviews = commons.getReviews(reviews)
+      dispatch(updateWordReviews(id, reviews))
     })
     dispatch(editWordReviewTime({id, nextReviewTime}));
     dispatch(orderWords(null))
@@ -28,16 +34,23 @@ var completeTodoRequest = (data) => {
 }
 
 var loadTodos = (words, time) => {
-  var todos = Object.keys(words).map((key) => {
-    var {word, translation, completed, imagePath} = words[key];
-    return {
-      id: key,
-      word,
-      translation,
-      imagePath,
-      completed
-    }
-  });
+  var todos = null;
+  if(!words) {
+    todos = []
+  }
+  else {
+    todos = Object.keys(words).map((key) => {
+      var {word, translation, completed, fullUrl, thumbnailUrl} = words[key];
+      return {
+        id: key,
+        word,
+        translation,
+        fullUrl,
+        thumbnailUrl,
+        completed
+      }
+    });
+  }
   return {
     type: 'LOAD_TODOS',
     todos: todos,
@@ -47,24 +60,33 @@ var loadTodos = (words, time) => {
 
 var setTodosRequest = (updated) => {
   return (dispatch) => {
+    console.log(updated + 'update')
     if(!updated) {
       let updatedTime = Date.now();
       database.ref('/users/' + 'test/lastUpdatedTime').set({time: updatedTime}).then(() => {
         //add set time of last update logic
         database.ref('/users/' + 'test/words').once('value').then((snapshot) => {
           var words = snapshot.val();
+          console.log('words')
+          console.log(words)
           database.ref('/users/' + 'test/todos').remove();
           for(var key in words) {
-            var {nextReviewTime, imagePath, word, translation} = words[key];
+            var {nextReviewTime, thumbnailUrl, fullUrl, word, translation} = words[key];
+            console.log(nextReviewTime + 'nr')
+            console.log(Date.now() + 'now')
             if(nextReviewTime <= Date.now()) {
+              console.log('yoy')
               let wordRef = database.ref('/users/' + 'test/todos/' + key);
-              wordRef.set({imagePath, word, translation, completed: false})
+              wordRef.set({thumbnailUrl, fullUrl, word, translation, completed: false})
             }
+
           }
         })
         .then(() => {
           database.ref('/users/' + 'test/todos').once('value').then((snapshot) => {
             let words = snapshot.val();
+            console.log('not updated')
+            console.log(words)
             dispatch(loadTodos(words));
           });
         })
@@ -73,6 +95,8 @@ var setTodosRequest = (updated) => {
     else {
       database.ref('/users/' + 'test/todos').once('value').then((snapshot) => {
         let words = snapshot.val();
+        console.log('updated')
+        console.log(words)
         dispatch(loadTodos(words, Date.now()));
       });
     }
