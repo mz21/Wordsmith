@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
   return {
     word: uncompleted[0].word,
     image: uncompleted[0].image,
+    thumbnail: uncompleted[0].thumbnailUrl,
     id: uncompleted[0].id,
     completed: completedTotal,
     total: todosTotal

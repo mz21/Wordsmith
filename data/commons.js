@@ -120,23 +120,33 @@ module.exports = {
         contentType = 'image/jpeg'
         break
     }
-    RNFetchBlob
+    return RNFetchBlob
       .config({ fileCache : true, appendExt : extension })
       .fetch('GET', url)
       .then((resp) => {
         return resp.path()
       })
       .then((file) => {
-        Blob.build(RNFetchBlob.wrap(file), {type: contentType + ';'})
+        return Blob.build(RNFetchBlob.wrap(file), {type: contentType + ';'})
         .then((blob) => {
-          storage.ref()
-          .child('/' + userId + '/' + imageId + '-' + urlType + '.' + extension)
+          return storage.ref()
+          .child('/user/' + userId + '/' + imageId + '-' + urlType + '.' + extension)
           .put(blob, {contentType: contentType})
           .then((snapshot) => {
-            console.log(snapshot)
             blob.close()
+            return storage.ref()
+            .child('/user/' + userId + '/' + imageId + '-' + urlType + '.' + extension)
+            .getDownloadURL().then((url) => {
+              return url
+            })
           })
         })
       })
+  },
+  getImageRequest: (url) => {
+    if(auth.currentUser && auth.currentUser.uid) {
+      let uid = auth.currentUser.uid
+      return storage.ref().child(uid + '/' + url).getDownloadURL()
+    }
   }
 }

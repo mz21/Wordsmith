@@ -8,7 +8,8 @@ class WordEntry extends React.Component {
     image: React.PropTypes.string,
     textColor: React.PropTypes.string,
     onPress: React.PropTypes.func,
-    id: React.PropTypes.string
+    id: React.PropTypes.string,
+    thumbnail: React.PropTypes.string
   };
   render() {
     return (
@@ -16,7 +17,7 @@ class WordEntry extends React.Component {
         <Text style={[styles.text, {color: this.props.textColor}]}>
           {this.props.word}
         </Text>
-        <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
+        <Image style={styles.image} source={{uri: this.props.thumbnail}} />
       </TouchableOpacity>
     );
   }

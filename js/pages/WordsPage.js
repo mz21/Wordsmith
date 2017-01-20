@@ -21,9 +21,9 @@ class WordsPage extends React.Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let wordsList = null;
     if(words.length) {
-      wordsList = <ListView
+      wordsList = <ListView contentContainerStyle={{paddingBottom: 50}}
         dataSource={ds.cloneWithRows(words)}
-        renderRow={(rowData) => <WordItem id={rowData.id} key={rowData.id} word={rowData.word} reviews={rowData.reviews} daysUntil={rowData.nextReviewTime} onPress={this.onPress}/>} />
+        renderRow={(rowData) => <WordItem id={rowData.id} key={rowData.id} thumbnail={rowData.thumbnailUrl} word={rowData.word} reviews={rowData.reviews} daysUntil={rowData.nextReviewTime} onPress={this.onPress}/>} />
     }
 
     if(this.state.isEditing) {

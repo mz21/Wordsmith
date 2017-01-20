@@ -10,7 +10,8 @@ class WordItem extends React.Component {
     daysUntil: React.PropTypes.number,
     reviews: React.PropTypes.array,
     onPress: React.PropTypes.func,
-    id: React.PropTypes.string
+    id: React.PropTypes.string,
+    thumbnail: React.PropTypes.string,
   }
   render() {
     var daysUntil = commons.setDaysUntilText(this.props.daysUntil)
@@ -22,7 +23,7 @@ class WordItem extends React.Component {
       <TouchableOpacity style={styles.container} onPress={() => {
         this.props.onPress(this.props.id)
       }}>
-        <Image style={styles.image} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
+        <Image style={styles.image} source={{uri: this.props.thumbnail}} />
         <View style={styles.label}>
           <Text style={styles.textWord}>
             {this.props.word}

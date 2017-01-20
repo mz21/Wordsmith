@@ -32,7 +32,7 @@ class AddPage extends React.Component {
     }
     // else addComponent is null
     return (
-      <ScrollView contentContainerStyle={styles.wrapper}>
+      <ScrollView keyboardShouldPersistTaps={true} contentContainerStyle={styles.wrapper}>
         <SearchBar onFocus={this.onFocus} onCancel={this.onCancel} onSubmit={this.onSubmit} placeholder="Find Image via Bing"/>
         <View style={styles.container}>
           {addComponent}

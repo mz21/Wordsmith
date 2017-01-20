@@ -41,7 +41,7 @@ export default class AddPageForm extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.formContainer} contentOffset={{y: this.state.keyboardOffset}}>
+        <ScrollView keyboardShouldPersistTaps={true} contentContainerStyle={styles.formContainer} contentOffset={{y: this.state.keyboardOffset}}>
           <WordForm {...this.props}/>
           <View style={styles.buttonSection}>
             <Button disabled={buttonDisabled} text="Add this Word" backgroundColor={buttonDisabled ? commons.DISABLED_GRAY : commons.MED_PURPLE} textColor='rgb(251,251,251)' width={110} height={35} onPress={() =>

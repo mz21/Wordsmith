@@ -1,4 +1,4 @@
-import {database} from '../firebaseSetup';
+import {database, storage} from '../firebaseSetup';
 import * as commons from '../commons';
 
 var setWordList = (words) => ({
@@ -77,8 +77,8 @@ var addWordRequest = (data) => {
   nextReviewTime = commons.convertToMidnight(nextReviewTime);
   return (dispatch) => {
     let uid = commons.getAuth()
-    var firebaseRef = database.ref('/users/' + uid + '/words').push();
-    var id = firebaseRef.key
+    var wordRef = database.ref('/users/' + uid + '/words').push();
+    var id = wordRef.key
     var values = {
       thumbnailUrl,
       fullUrl,
@@ -89,15 +89,21 @@ var addWordRequest = (data) => {
     };
 
     if(thumbnailUrl && fullUrl) {
-      values.thumbnailUrl = uid + '/' + id + '-thumb' + '.jpg'
-      values.fullUrl = uid + '/' + id + '-full' + '.jpg'
-      commons.storeImageRequest({url: thumbnailUrl, urlType: 'thumb', imageType: null, userId: uid, imageId: id})
-      commons.storeImageRequest({url: fullUrl, urlType: 'full', imageType: null, userId: uid, imageId: id})
+      commons.storeImageRequest({url: thumbnailUrl, urlType: 'thumb', imageType: null, userId: uid, imageId: id}).then((thumbUrl) => {
+        values.thumbnailUrl = thumbUrl
+        commons.storeImageRequest({url: fullUrl, urlType: 'full', imageType: null, userId: uid, imageId: id}).then((fUrl) => {
+          values.fullUrl = fUrl
+          wordRef.set(values)
+          dispatch(addWord({...values, id, nextReviewTime: commons.daysUntil(nextReviewTime), reviews: []}));
+          dispatch(orderWords(null));
+        })
+      })
     }
-    firebaseRef.set(values);
-
-    dispatch(addWord({...values, id, nextReviewTime: commons.daysUntil(nextReviewTime), reviews: []}));
-    dispatch(orderWords(null));
+    else {
+      wordRef.set(values);
+      dispatch(addWord({...values, id, nextReviewTime: commons.daysUntil(nextReviewTime), reviews: []}));
+      dispatch(orderWords(null));
+    }
   }
 }
 
@@ -131,22 +137,31 @@ var editWordRequest = (data) => {
     if(id && id != '') {
       let uid = commons.getAuth()
 
-      if(thumbnailUrl && fullUrl) {
-        commons.storeImageRequest({url: thumbnailUrl, urlType: 'thumb', imageType: null, userId: uid, imageId: id})
-        commons.storeImageRequest({url: fullUrl, urlType: 'full', imageType: null, userId: uid, imageId: id})
-        thumbnailUrl = uid + '/' + id + '-thumb' + '.jpg'
-        fullUrl = uid + '/' + id + '-full' + '.jpg'
-      }
-
       let updatePath = '/users/' + uid + '/words/' + id + '/'
       let updates = {}
       updates[updatePath + 'word'] = word
       updates[updatePath + 'translation'] = translation
       updates[updatePath + 'thumbnailUrl'] = thumbnailUrl
       updates[updatePath + 'fullUrl'] = fullUrl
-      database.ref().update(updates)
-      dispatch(editWord(data));
-      dispatch(orderWords(null));
+
+      if(thumbnailUrl && fullUrl) {
+        commons.storeImageRequest({url: thumbnailUrl, urlType: 'thumb', imageType: null, userId: uid, imageId: id}).then((thumbUrl) => {
+          updates[updatePath + 'thumbnailUrl'] = thumbUrl
+          commons.storeImageRequest({url: fullUrl, urlType: 'full', imageType: null, userId: uid, imageId: id}).then((fUrl) => {
+            updates[updatePath + 'fullUrl'] = fUrl
+            data.thumbnailUrl = thumbUrl
+            data.fullUrl = fullUrl
+            database.ref().update(updates)
+            dispatch(editWord(data));
+            dispatch(orderWords(null));
+          })
+        })
+      }
+      else {
+        database.ref().update(updates)
+        dispatch(editWord(data));
+        dispatch(orderWords(null));
+      }
     }
   }
 }
@@ -168,6 +183,16 @@ var deleteWordRequest = (id) => {
     dispatch(deleteTodoRequest(id))
     if(id && id != '') {
       database.ref('/users/' + commons.getAuth() + '/words/' + id).remove();
+      let thumbRef = storage.ref().child('/user/' + commons.getAuth() + '/' + id + '-thumb' + '.jpg')
+      thumbRef.delete().then(() => {
+        storage.ref().child('/user/' + commons.getAuth() + '/' + id + '-full' + '.jpg').delete().then(() => {
+        })
+        .catch(() => {
+          //file doesn't exist
+        })
+      }).catch(() => {
+        //file doesn't exit
+      })
     }
     else {
       console.log('invalid id ' + id)
@@ -180,8 +205,6 @@ var setWordListRequest = () => {
   return (dispatch) => {
     return database.ref('/users/' + commons.getAuth() + '/words').once('value', (snapshot) => {
       var words = snapshot.val();
-      console.log('wordss')
-      console.log(words)
       if(!words || words.length === 0) {
         words = []
       }
@@ -199,7 +222,6 @@ var setWordListRequest = () => {
           }
         });
       }
-      console.log(words)
       dispatch(setWordList(words));
       dispatch(orderWords(null));
     });
