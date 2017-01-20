@@ -76,7 +76,8 @@ var addWordRequest = (data) => {
   nextReviewTime.setDate(nextReviewTime.getDate() + 1);
   nextReviewTime = commons.convertToMidnight(nextReviewTime);
   return (dispatch) => {
-    var firebaseRef = database.ref('/users/' + commons.getAuth() + '/words').push();
+    let uid = commons.getAuth()
+    var firebaseRef = database.ref('/users/' + uid + '/words').push();
     var id = firebaseRef.key
     var values = {
       thumbnailUrl,
@@ -86,6 +87,13 @@ var addWordRequest = (data) => {
       nextReviewTime,
       createTime
     };
+
+    if(thumbnailUrl && fullUrl) {
+      values.thumbnailUrl = uid + '/' + id + '-thumb' + '.jpg'
+      values.fullUrl = uid + '/' + id + '-full' + '.jpg'
+      commons.storeImageRequest({url: thumbnailUrl, urlType: 'thumb', imageType: null, userId: uid, imageId: id})
+      commons.storeImageRequest({url: fullUrl, urlType: 'full', imageType: null, userId: uid, imageId: id})
+    }
     firebaseRef.set(values);
 
     dispatch(addWord({...values, id, nextReviewTime: commons.daysUntil(nextReviewTime), reviews: []}));
@@ -120,16 +128,26 @@ var editWordRequest = (data) => {
   return (dispatch) => {
     dispatch(editTodoRequest(data))
     let {id, word, translation, thumbnailUrl, fullUrl} = data
-    let updatePath = '/users/' + commons.getAuth() + '/words/' + id + '/'
-    let updates = {}
-    updates[updatePath + 'word'] = word
-    updates[updatePath + 'translation'] = translation
-    updates[updatePath + 'thumbnailUrl'] = thumbnailUrl
-    updates[updatePath + 'fullUrl'] = fullUrl
+    if(id && id != '') {
+      let uid = commons.getAuth()
 
-    database.ref().update(updates)
-    dispatch(editWord(data));
-    dispatch(orderWords(null));
+      if(thumbnailUrl && fullUrl) {
+        commons.storeImageRequest({url: thumbnailUrl, urlType: 'thumb', imageType: null, userId: uid, imageId: id})
+        commons.storeImageRequest({url: fullUrl, urlType: 'full', imageType: null, userId: uid, imageId: id})
+        thumbnailUrl = uid + '/' + id + '-thumb' + '.jpg'
+        fullUrl = uid + '/' + id + '-full' + '.jpg'
+      }
+
+      let updatePath = '/users/' + uid + '/words/' + id + '/'
+      let updates = {}
+      updates[updatePath + 'word'] = word
+      updates[updatePath + 'translation'] = translation
+      updates[updatePath + 'thumbnailUrl'] = thumbnailUrl
+      updates[updatePath + 'fullUrl'] = fullUrl
+      database.ref().update(updates)
+      dispatch(editWord(data));
+      dispatch(orderWords(null));
+    }
   }
 }
 

@@ -14,7 +14,6 @@ class WordItem extends React.Component {
   }
   render() {
     var daysUntil = commons.setDaysUntilText(this.props.daysUntil)
-    console.log('border')
     var accuracy = commons.getReviewsAccuracy(this.props.reviews);
     if(Number.isInteger(accuracy)) {
       accuracy += '%'

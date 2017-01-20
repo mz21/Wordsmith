@@ -1,7 +1,11 @@
 import {AsyncStorage} from 'react-native'
-import {auth} from './firebaseSetup'
+import {auth, storage} from './firebaseSetup'
 const USER_KEY = 'USER'
 var uuid = require('uuid')
+import RNFetchBlob from 'react-native-fetch-blob'
+const Blob = RNFetchBlob.polyfill.Blob
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+window.Blob = Blob
 
 module.exports = {
   TODO: 'TODO',
@@ -97,5 +101,42 @@ module.exports = {
     }
     console.warn('somehow wasnt authenticated')
     return null
+  },
+  storeImageRequest: (data) => { //data requires url, imageType, userId, and imageId fields
+    let {url, urlType, imageType, userId, imageId} = data
+    var extension = null
+    var contentType = null
+    switch(imageType) {
+      case 'jpg':
+        extension = 'jpg'
+        contentType = 'image/jpeg'
+        break
+      case 'png':
+        extension = 'png'
+        contentType = 'image/png'
+        break
+      default:
+        extension = 'jpg'
+        contentType = 'image/jpeg'
+        break
+    }
+    RNFetchBlob
+      .config({ fileCache : true, appendExt : extension })
+      .fetch('GET', url)
+      .then((resp) => {
+        return resp.path()
+      })
+      .then((file) => {
+        Blob.build(RNFetchBlob.wrap(file), {type: contentType + ';'})
+        .then((blob) => {
+          storage.ref()
+          .child('/' + userId + '/' + imageId + '-' + urlType + '.' + extension)
+          .put(blob, {contentType: contentType})
+          .then((snapshot) => {
+            console.log(snapshot)
+            blob.close()
+          })
+        })
+      })
   }
 }
