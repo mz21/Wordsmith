@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import NavTabBars from '../containers/NavTabBars';
 import HeaderBar from '../containers/HeaderBar';
 import * as commons from '../../data/commons';
@@ -17,13 +14,27 @@ class InitialSetup extends React.Component {
   componentWillMount() {
     commons.getUser().then((key) => {
       if(key) {
-        commons.signInUser(key)
+        commons.signInUser(key).then(() => {
+          this.loadEverything()
+        })
       }
       else {
         console.warn('key doesnt exist')
-        commons.createUser()
+        commons.createUser().then(() => {
+          this.loadEverything()
+        })
       }
     })
+  }
+  render() {
+    return (
+      <View style={styles.container}>
+        <HeaderBar title="Todos for Today"/>
+        <NavTabBars />
+      </View>
+    )
+  }
+  loadEverything() {
     this.props.setUpdatedTime().then(() => {
       let midnightToday = commons.convertToMidnight(new Date(Date.now()));
       var alreadyBeenUpdatedToday = true;
@@ -34,14 +45,6 @@ class InitialSetup extends React.Component {
     });
 
     this.props.setWordList();
-  }
-  render() {
-    return (
-      <View style={styles.container}>
-        <HeaderBar title="Todos for Today"/>
-        <NavTabBars />
-      </View>
-    )
   }
 }
 

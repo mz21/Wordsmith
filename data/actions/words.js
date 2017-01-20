@@ -76,7 +76,7 @@ var addWordRequest = (data) => {
   nextReviewTime.setDate(nextReviewTime.getDate() + 1);
   nextReviewTime = commons.convertToMidnight(nextReviewTime);
   return (dispatch) => {
-    var firebaseRef = database.ref('/users/' + 'test/words').push();
+    var firebaseRef = database.ref('/users/' + commons.getAuth() + '/words').push();
     var id = firebaseRef.key
     var values = {
       thumbnailUrl,
@@ -97,18 +97,22 @@ var editTodoRequest = (data) => {
   let {id, word, translation, thumbnailUrl, fullUrl} = data
   return (dispatch) => {
     if(id && id != '') {
-      let updatePath = '/users/' + 'test/todos/' + id + '/'
+      let updatePath = '/users/' + commons.getAuth() + '/todos/' + id + '/'
       let updates = {}
       updates[updatePath + 'word'] = word
       updates[updatePath + 'translation'] = translation
       updates[updatePath + 'thumbnailUrl'] = thumbnailUrl
       updates[updatePath + 'fullUrl'] = fullUrl
-      database.ref().update(updates)
+      database.ref(updatePath).once('value').then((snapshot) => {
+        if(snapshot.val()) {
+          database.ref().update(updates)
+          dispatch(editTodo(data))
+        }
+      })
     }
     else {
       console.log('invalid id ' + id)
     }
-    dispatch(editTodo(data))
   }
 }
 
@@ -116,7 +120,7 @@ var editWordRequest = (data) => {
   return (dispatch) => {
     dispatch(editTodoRequest(data))
     let {id, word, translation, thumbnailUrl, fullUrl} = data
-    let updatePath = '/users/' + 'test/words/' + id + '/'
+    let updatePath = '/users/' + commons.getAuth() + '/words/' + id + '/'
     let updates = {}
     updates[updatePath + 'word'] = word
     updates[updatePath + 'translation'] = translation
@@ -132,7 +136,7 @@ var editWordRequest = (data) => {
 var deleteTodoRequest = (id) => {
   return (dispatch) => {
     if(id && id != '') {
-      database.ref('/users/' + 'test/todos/' + id).remove();
+      database.ref('/users/' + commons.getAuth() + '/todos/' + id).remove();
     }
     else {
       console.log('invalid id ' + id)
@@ -145,7 +149,7 @@ var deleteWordRequest = (id) => {
   return (dispatch) => {
     dispatch(deleteTodoRequest(id))
     if(id && id != '') {
-      database.ref('/users/' + 'test/words/' + id).remove();
+      database.ref('/users/' + commons.getAuth() + '/words/' + id).remove();
     }
     else {
       console.log('invalid id ' + id)
@@ -156,8 +160,10 @@ var deleteWordRequest = (id) => {
 
 var setWordListRequest = () => {
   return (dispatch) => {
-    return database.ref('/users/' + 'test/words').once('value', (snapshot) => {
+    return database.ref('/users/' + commons.getAuth() + '/words').once('value', (snapshot) => {
       var words = snapshot.val();
+      console.log('wordss')
+      console.log(words)
       if(!words || words.length === 0) {
         words = []
       }
@@ -175,6 +181,7 @@ var setWordListRequest = () => {
           }
         });
       }
+      console.log(words)
       dispatch(setWordList(words));
       dispatch(orderWords(null));
     });

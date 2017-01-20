@@ -70,17 +70,12 @@ module.exports = {
     return AsyncStorage.getItem(USER_KEY) // returns a promise
   },
   signInUser: (key) => {
-    auth.signInWithEmailAndPassword(key + '@gmail.com', key).then((d) => {
-      console.log(d)
-    })
+    return auth.signInWithEmailAndPassword(key + '@gmail.com', key)
   },
   createUser: () => {
     var key = uuid.v4()
     AsyncStorage.setItem(USER_KEY, key)
     auth.createUserWithEmailAndPassword(key + '@gmail.com', key)
-    .then((d) => {
-      console.log(d)
-    })
     .catch(function(error) {
       console.warn(error)
     })
@@ -95,5 +90,12 @@ module.exports = {
       reviews = [];
     }
     return reviews
+  },
+  getAuth: () => {
+    if(auth.currentUser && auth.currentUser.uid) {
+      return auth.currentUser.uid
+    }
+    console.warn('somehow wasnt authenticated')
+    return null
   }
 }

@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { setTodosRequest, setUpdatedTime, setWordListRequest} from '../../../data/actions'
 import {default as DumbInitialSetup} from '../../pages/InitialSetup'
 import {database} from '../../../data/firebaseSetup';
+import * as commons from '../../../data/commons';
 
 const mapStateToProps = (state) => {
   console.log(state);
@@ -16,8 +17,19 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setTodosRequest(updated));
     },
     setUpdatedTime: () => {
-      return database.ref('/users/' + 'test/lastUpdatedTime/').once('value').then((snapshot) => {
-        var updatedTime = snapshot.val().time;
+      let updatedTimeRef = database.ref('/users/' + commons.getAuth() + '/lastUpdatedTime/')
+      return updatedTimeRef.once('value').then((snapshot) => {
+        let value = snapshot.val();
+        let updatedTime = null
+        if(!value) {
+          updatedTime = Date.now()
+          updatedTimeRef.set({
+            time: updatedTime
+          })
+        }
+        else {
+          updatedTime = snapshot.val().time;
+        }
         dispatch(setUpdatedTime(updatedTime));
       });
     },

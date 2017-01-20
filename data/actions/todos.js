@@ -12,14 +12,14 @@ var completeTodo = (id) => {
 var completeTodoRequest = (data) => {
   var {id, success} = data;
   return (dispatch) => {
-    database.ref('/users/' + 'test/todos/' + id).update({completed: true});
-    let reviewsRef = database.ref('/users/' + '/test/words/' + id + '/reviews')
+    database.ref('/users/' + commons.getAuth() + '/todos/' + id).update({completed: true});
+    let reviewsRef = database.ref('/users/' + commons.getAuth() + '/words/' + id + '/reviews')
     let reviewRef = reviewsRef.push();
     reviewRef.set({reviewTime: Date.now(), success});
     var nextReviewTime = new Date(Date.now());
     nextReviewTime.setDate(nextReviewTime.getDate() + 1);
     nextReviewTime = commons.convertToMidnight(nextReviewTime);
-    let wordRef = database.ref('/users/' + '/test/words/' + id).update({
+    let wordRef = database.ref('/users/' + commons.getAuth() + '/words/' + id).update({
       nextReviewTime
     })
     reviewsRef.once('value').then((snapshot) => {
@@ -63,27 +63,27 @@ var setTodosRequest = (updated) => {
     console.log(updated + 'update')
     if(!updated) {
       let updatedTime = Date.now();
-      database.ref('/users/' + 'test/lastUpdatedTime').set({time: updatedTime}).then(() => {
+      database.ref('/users/' + commons.getAuth() + '/lastUpdatedTime').set({time: updatedTime}).then(() => {
         //add set time of last update logic
-        database.ref('/users/' + 'test/words').once('value').then((snapshot) => {
+        database.ref('/users/' + commons.getAuth() + '/words').once('value').then((snapshot) => {
           var words = snapshot.val();
           console.log('words')
           console.log(words)
-          database.ref('/users/' + 'test/todos').remove();
+          database.ref('/users/' + commons.getAuth() + '/todos').remove();
           for(var key in words) {
             var {nextReviewTime, thumbnailUrl, fullUrl, word, translation} = words[key];
             console.log(nextReviewTime + 'nr')
             console.log(Date.now() + 'now')
             if(nextReviewTime <= Date.now()) {
               console.log('yoy')
-              let wordRef = database.ref('/users/' + 'test/todos/' + key);
+              let wordRef = database.ref('/users/' + commons.getAuth() + '/todos/' + key);
               wordRef.set({thumbnailUrl, fullUrl, word, translation, completed: false})
             }
 
           }
         })
         .then(() => {
-          database.ref('/users/' + 'test/todos').once('value').then((snapshot) => {
+          database.ref('/users/' + commons.getAuth() + '/todos').once('value').then((snapshot) => {
             let words = snapshot.val();
             console.log('not updated')
             console.log(words)
@@ -93,7 +93,7 @@ var setTodosRequest = (updated) => {
       });
     }
     else {
-      database.ref('/users/' + 'test/todos').once('value').then((snapshot) => {
+      database.ref('/users/' + commons.getAuth() + '/todos').once('value').then((snapshot) => {
         let words = snapshot.val();
         console.log('updated')
         console.log(words)
