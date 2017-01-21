@@ -16,10 +16,7 @@ class WordItem extends React.Component {
   }
   render() {
     var daysUntil = commons.setDaysUntilText(this.props.daysUntil)
-    var accuracy = commons.getReviewsAccuracy(this.props.reviews);
-    if(Number.isInteger(accuracy)) {
-      accuracy += '%'
-    }
+    var accuracy = commons.getReviewsAccuracyString(this.props.reviews);
     return (
       <TouchableOpacity style={styles.container} onPress={() => {
         this.props.onPress(this.props.id)
@@ -30,7 +27,7 @@ class WordItem extends React.Component {
             {this.props.word}
           </Text>
           <Text style={styles.textCaption}>
-            {accuracy} |  Next: {daysUntil}
+            {accuracy} |  Next Attempt: {daysUntil}
           </Text>
         </View>
       </TouchableOpacity>

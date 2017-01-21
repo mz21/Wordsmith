@@ -57,8 +57,6 @@ module.exports = {
     return daysUntilText;
   },
   getReviewsAccuracy: (reviews) => {
-    console.log('reviewss')
-    console.log(reviews)
     if(!reviews || reviews.length === 0) {
       return 'New Word'
     }
@@ -68,6 +66,18 @@ module.exports = {
         return review.success
       }).length;
       return Math.round(100 * correct/total);
+    }
+  },
+  getReviewsAccuracyString: (reviews) => {
+    if(!reviews || reviews.length === 0) {
+      return '0/0'
+    }
+    else {
+      let total = reviews.length;
+      let correct = reviews.filter(review => {
+        return review.success
+      }).length;
+      return correct + '/' + total
     }
   },
   getUser: () => {
