@@ -25,6 +25,7 @@ module.exports = {
   MED_PURPLE: 'rgb(180,137,195)',
   DISABLED_GRAY: 'rgb(205,205,205)',
   RED: 'rgb(243,69,65)',
+  ALMOST_WHITE: 'rgb(253,253,253)',
   convertToMidnight: (date) => {
     var savedDate = new Date();
     savedDate.setDate(date.getDate());

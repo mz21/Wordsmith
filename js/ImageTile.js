@@ -15,7 +15,7 @@ export default class ImageTile extends React.Component {
     if(!this.props.url && this.props.text && this.props.text.length > 0) {
       let character = this.props.text.charAt(0)
       character = removeDiacritics(character.toUpperCase())
-      imageComp = <View style={[{width: this.props.width, height: this.props.height, borderWidth: 2, borderColor: 'rgb(210,210,210)', alignItems: 'center', justifyContent: 'center'}]}>
+      imageComp = <View style={[{width: this.props.width, height: this.props.height, backgroundColor: 'rgb(220,220,220)', alignItems: 'center', justifyContent: 'center'}]}>
         <Text style={{fontWeight: '800', color: 'rgb(180,137,195)', fontSize: this.props.width * 0.65, fontFamily: 'Avenir Next'}}>{character}</Text>
       </View>
     }

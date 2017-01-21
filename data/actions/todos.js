@@ -41,6 +41,15 @@ var loadTodos = (words, time) => {
   else {
     todos = Object.keys(words).map((key) => {
       var {word, translation, completed, fullUrl, thumbnailUrl} = words[key];
+      if(!translation) {
+        translatiion = ''
+      }
+      if(!fullUrl) {
+        fullUrl = ''
+      }
+      if(!thumbnailUrl) {
+        thumbnailUrl = ''
+      }
       return {
         id: key,
         word,
@@ -72,10 +81,16 @@ var setTodosRequest = (updated) => {
           database.ref('/users/' + commons.getAuth() + '/todos').remove();
           for(var key in words) {
             var {nextReviewTime, thumbnailUrl, fullUrl, word, translation} = words[key];
-            console.log(nextReviewTime + 'nr')
-            console.log(Date.now() + 'now')
+            if(!thumbnailUrl) {
+              thumbnailUrl = ''
+            }
+            if(!fullUrl) {
+              fullUrl = ''
+            }
+            if(!translation) {
+              translation = ''
+            }
             if(nextReviewTime <= Date.now()) {
-              console.log('yoy')
               let wordRef = database.ref('/users/' + commons.getAuth() + '/todos/' + key);
               wordRef.set({thumbnailUrl, fullUrl, word, translation, completed: false})
             }

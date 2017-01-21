@@ -9,9 +9,9 @@ import SmartTodoNav from './containers/pages/TodoNav'
 import * as tabs from '../data/commons'
 
 class NavTabBars extends React.Component {
-  state = {
-    selectedTab: tabs.TODO
-  };
+  props: {
+    tab: React.PropTypes.string
+  }
   render() {
     return (
       <TabBarIOS
@@ -21,7 +21,7 @@ class NavTabBars extends React.Component {
           title="Todo"
           iconName="check-box"
           selectedIconName="check-box"
-          selected={this.state.selectedTab === tabs.TODO}
+          selected={this.props.tab === tabs.TODO}
           onPress={() => {
             this.setState({
               selectedTab: tabs.TODO
@@ -34,7 +34,7 @@ class NavTabBars extends React.Component {
           title="Add"
           iconName="add-circle-outline"
           selectedIconName="add-circle-outline"
-          selected={this.state.selectedTab === tabs.ADD}
+          selected={this.props.tab === tabs.ADD}
           onPress={() => {
            this.setState({
              selectedTab: tabs.ADD,
@@ -48,7 +48,7 @@ class NavTabBars extends React.Component {
           title="Words"
           iconName="view-list"
           selectedIconName="view-list"
-          selected={this.state.selectedTab === tabs.WORDS}
+          selected={this.props.tab === tabs.WORDS}
           onPress={() => {
            this.setState({
              selectedTab: tabs.WORDS,
@@ -62,7 +62,7 @@ class NavTabBars extends React.Component {
           title="Profile"
           iconName="person"
           selectedIconName="person"
-          selected={this.state.selectedTab === tabs.PROFILE}
+          selected={this.props.tab === tabs.PROFILE}
           onPress={() => {
            this.setState({
              selectedTab: tabs.PROFILE,

@@ -33,6 +33,9 @@ const mapDispatchToProps = (dispatch) => {
     onTab: () => {
       dispatch(switchTab(tabs.TODOQUIZ))
     },
+    addWordTab: () => {
+      dispatch(switchTab(tabs.ADD))
+    },
     editWord: (words, id) => {
       dispatch(setEditWord(words, id))
     }

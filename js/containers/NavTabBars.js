@@ -4,7 +4,7 @@ import {default as DumbNavTabBars} from '../NavTabBars'
 
 const mapStateToProps = (state) => {
   return {
-    tab: state.tab
+    tab: state.navigation.tab
   }
 }
 

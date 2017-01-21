@@ -10,8 +10,9 @@ import ProgressCircle from 'react-native-progress/Circle';
 import Button from '../Button';
 import WordEntry from '../WordEntry';
 import AddPage from '../containers/pages/AddPage'
+import commons from '../../data/commons'
 
-var {width} = Dimensions.get('window');
+var {width, height} = Dimensions.get('window');
 class TodoPage extends React.Component {
   props: {
     onTab: React.PropTypes.func,
@@ -20,6 +21,8 @@ class TodoPage extends React.Component {
     words: React.PropTypes.array,
     uncompletedTodos: React.PropTypes.array,
     completedTodos: React.PropTypes.array,
+    completed: React.PropTypes.number,
+    total: React.PropTypes.number,
   }
   state = {
     isEditing: false
@@ -44,6 +47,17 @@ class TodoPage extends React.Component {
     if(this.state.isEditing) {
       return (
         <AddPage editMode={true} goBack={() => {this.setState({isEditing: false})}}/>
+      )
+    }
+    if(this.props.total) {
+      return (
+        <View style={styles.noTodosLayout}>
+          <View style={{height: 130, width: width * 0.7, justifyContent: 'space-between', alignItems: 'center'}}>
+          <Text style={{fontFamily: 'Avenir Next', fontWeight: '600', fontSize: 24, color: commons.PURPLE}}>No Words Today</Text>
+          <Text style={{fontFamily: 'Avenir Next', textAlign: 'center'}}>Consider adding a few words to do tomorrow.</Text>
+          <Button width={110} height={35} text="Add Word" backgroundColor={commons.PURPLE} textColor={commons.ALMOST_WHITE} onPress={this.props.addWordTab} />
+          </View>
+        </View>
       )
     }
     else {
@@ -74,6 +88,12 @@ var styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: width,
     marginBottom: 50
+  },
+  noTodosLayout: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 0.85 * height
   },
   progressSection: {
     flexDirection: 'row',
