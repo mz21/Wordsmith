@@ -68,8 +68,12 @@ class TodoPage extends React.Component {
         )
       }
       else {
+        let buttonText = 'Resume'
+        if(this.props.completed == 0) {
+          buttonText = 'Start'
+        }
         buttonSection = (
-          <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
+          <Button width={110} height={35} text={buttonText} onPress={this.props.onTab} backgroundColor={commons.MED_PURPLE} textColor={commons.ALMOST_WHITE}/>
         )
       }
       return (
