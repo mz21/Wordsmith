@@ -1,5 +1,6 @@
 var React = require('React');
 import {View, Text, StyleSheet} from 'react-native';
+import * as commons from '../data/commons'
 
 export default class ProgressBar extends React.Component {
   props: {
@@ -28,11 +29,11 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
   },
   bar: {
-    backgroundColor: 'gray',
-    height: 3,
+    backgroundColor: commons.DISABLED_GRAY,
+    height: 5,
     marginLeft: 0.5
   },
   completedBar: {
-    backgroundColor: 'purple'
+    backgroundColor: commons.MED_PURPLE
   }
 });

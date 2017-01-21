@@ -49,7 +49,7 @@ class TodoPage extends React.Component {
         <AddPage editMode={true} goBack={() => {this.setState({isEditing: false})}}/>
       )
     }
-    if(this.props.total) {
+    if(!this.props.total) {
       return (
         <View style={styles.noTodosLayout}>
           <View style={{height: 130, width: width * 0.7, justifyContent: 'space-between', alignItems: 'center'}}>
@@ -61,11 +61,22 @@ class TodoPage extends React.Component {
       )
     }
     else {
+      let buttonSection = null
+      if(this.props.completed == this.props.total) {
+        buttonSection = (
+          <Text style={{fontFamily: 'Avenir Next', color: 'rgb(65,65,65)'}}>All Complete!</Text>
+        )
+      }
+      else {
+        buttonSection = (
+          <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
+        )
+      }
       return (
         <View style={styles.todoLayout}>
           <View style={styles.progressSection}>
             <ProgressCircle size={80} showsText formatText={() => this.props.completed + '/' + this.props.total} progress={this.props.total ? this.props.completed / this.props.total : 0} color={'rgba(197,111,255, 1)'} thickness={5} unfilledColor={'rgba(197,111,255, 0.35)'} borderWidth={0} textStyle={styles.progressCircleText} indeterminate={false} />
-            <Button width={110} height={35} text="Start" onPress={this.props.onTab} />
+            {buttonSection}
           </View>
           <ScrollView contentContainerStyle={styles.wordEntries}>
             {uncompletedWords}
