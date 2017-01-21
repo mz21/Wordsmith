@@ -56,7 +56,7 @@ export default class EditPageForm extends React.Component {
   }
   onDeleteWord = () => {
     Alert.alert(
-      'Alert Title',
+      'Deleting Word',
       'Are you sure you want to delete this word?',
       [
         {text: 'Cancel', onPress: () => {}},

@@ -1,5 +1,6 @@
 var React = require('React');
 import {StyleSheet, View, Text, Image, Dimensions, TouchableOpacity} from 'react-native'
+import ImageTile from './ImageTile'
 
 var {width} = Dimensions.get('window');
 class WordEntry extends React.Component {
@@ -17,7 +18,7 @@ class WordEntry extends React.Component {
         <Text style={[styles.text, {color: this.props.textColor}]}>
           {this.props.word}
         </Text>
-        <Image style={styles.image} source={{uri: this.props.thumbnail}} />
+        <ImageTile width={30} height={30} text={this.props.word} url={this.props.thumbnail} />
       </TouchableOpacity>
     );
   }
@@ -36,10 +37,6 @@ var styles = StyleSheet.create({
   },
   text: {
     marginLeft: 5
-  },
-  image: {
-    width: 30,
-    height: 30
   }
 });
 

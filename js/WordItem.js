@@ -1,5 +1,6 @@
 var React = require('React');
 import {StyleSheet, View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
+import ImageTile from './ImageTile'
 import * as commons from '../data/commons'
 
 var {width} = Dimensions.get('window');
@@ -23,7 +24,7 @@ class WordItem extends React.Component {
       <TouchableOpacity style={styles.container} onPress={() => {
         this.props.onPress(this.props.id)
       }}>
-        <Image style={styles.image} source={{uri: this.props.thumbnail}} />
+        <ImageTile width={42} height={42} text={this.props.word} url={this.props.thumbnail} />
         <View style={styles.label}>
           <Text style={styles.textWord}>
             {this.props.word}

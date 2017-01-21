@@ -6,6 +6,7 @@ var Image = require('Image');
 var Dimensions = require('Dimensions');
 import CircularButton from '../CircularButton'
 import ProgressBar from '../ProgressBar'
+import ImageTile from '../ImageTile'
 
 var {width, height} = Dimensions.get('window');
 export default class TodoQuizPage extends React.Component {
@@ -22,8 +23,7 @@ export default class TodoQuizPage extends React.Component {
     return (
       <View style={styles.container}>
         <ProgressBar completed={this.props.completed} total={this.props.total} length={width*0.7} />
-        <Image source={{uri: this.props.thumbnail}}
-       style={{width: width * 0.7, height: width * 0.7}} />
+        <ImageTile url={this.props.thumbnail} width={width * 0.7} height={width * 0.7} text={this.props.word} />
         <Text>
           {this.props.word}
         </Text>
