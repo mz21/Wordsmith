@@ -111,6 +111,15 @@ var editTodoRequest = (data) => {
   let {id, word, translation, thumbnailUrl, fullUrl} = data
   return (dispatch) => {
     if(id && id != '') {
+      if(!translation) {
+        translation = ''
+      }
+      if(!fullUrl) {
+        fullUrl = ''
+      }
+      if(!thumbnailUrl) {
+        thumbnailUrl = ''
+      }
       let updatePath = '/users/' + commons.getAuth() + '/todos/' + id + '/'
       let updates = {}
       updates[updatePath + 'word'] = word
@@ -134,6 +143,15 @@ var editWordRequest = (data) => {
   return (dispatch) => {
     dispatch(editTodoRequest(data))
     let {id, word, translation, thumbnailUrl, fullUrl} = data
+    if(!translation) {
+      translation = ''
+    }
+    if(!fullUrl) {
+      fullUrl = ''
+    }
+    if(!thumbnailUrl) {
+      thumbnailUrl = ''
+    }
     if(id && id != '') {
       let uid = commons.getAuth()
 
